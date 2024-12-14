@@ -15,6 +15,12 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'ivory': '#E9EED9',
+                'honeydew': '#CBD2A4',
+                'mocha': '#9A7E6F',
+                'charcoal': '#54473F',
+            },
         },
     },
     plugins: [require('flowbite/plugin')],

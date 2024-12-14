@@ -1,4 +1,4 @@
-<nav class="bg-[#E9EED9] border-gray-200 dark:bg-gray-900 relative">
+<nav class="bg-white border-gray-200 dark:bg-gray-900 relative">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {{-- Logo --}}
         <a href="{{ url('/') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -64,7 +64,7 @@
 
             {{-- Navigation Links --}}
             <ul
-                class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-[#E9EED9] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
                     <a href="{{ url('/') }}"
                         class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
@@ -87,7 +87,7 @@
 
                     {{-- Dropdown Menu --}}
                     <div id="dropdown-navbar"
-                        class="absolute z-50 hidden font-normal bg-[#E9EED9] divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                        class="absolute z-50 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-400">
                             <li>
                                 <a href="#"
