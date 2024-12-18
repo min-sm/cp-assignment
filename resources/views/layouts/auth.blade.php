@@ -7,7 +7,6 @@
     <title>@yield('title')</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="grid place-items-center h-screen bg-gray-100">
     @yield('content')

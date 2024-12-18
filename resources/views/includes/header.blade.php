@@ -102,11 +102,23 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="py-1">
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                Sign out
-                            </a>
+                        <div class="py-1" x-data>
+                            @auth
+                                <a href="#" @click.prevent="document.getElementById('logout-form').submit()"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    Sign out
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            @endauth
+
+                            @guest
+                                <a href="{{ route('login') }}"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    Login
+                                </a>
+                            @endguest
                         </div>
                     </div>
                 </li>
