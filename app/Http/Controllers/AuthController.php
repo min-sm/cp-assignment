@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -63,6 +65,20 @@ class AuthController extends Controller
                 'password' => 'Incorrect password.',
             ]);
         }
+    }
+
+    public function githubCallback()
+    {
+        $user = Socialite::driver('github')->user();
+        $user = User::firstOrCreate([
+            'email' => $user->email
+        ], [
+            'name' => $user->name,
+            'password' => Hash::make(Str::random(24))
+        ]);
+
+        Auth::login($user, true);
+        return redirect('/');
     }
 
     public function logout(Request $request)

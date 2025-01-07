@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -14,6 +15,12 @@ Route::middleware('guest')->group(function () {
     // Sign in routes
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
+
+    Route::get('/auth/github/redirect', function () {
+        return Socialite::driver('github')->redirect();
+    });
+
+    Route::get('/auth/github/callback', [AuthController::class, 'githubCallback']);
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
