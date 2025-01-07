@@ -80,16 +80,17 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach ($products as $product)
                 <div
-                    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
                     <a href="#">
-                        <img class="p-8 rounded-t-lg" src="{{ asset($product['image']) }}" alt="product image" />
+                        <img class="w-full h-48 object-cover p-8 rounded-t-lg" src="{{ asset($product['image']) }}"
+                            alt="product image" />
                     </a>
-                    <div class="px-5 pb-5">
+                    <div class="px-5 pb-5 flex flex-col flex-grow">
                         <a href="#">
                             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                {{ $product['title'] }}</h5>
+                                {{ Str::words($product['title'], 7, '...') }}</h5>
                         </a>
-                        <p class="mb-3 mt-2 font-normal text-gray-700 dark:text-gray-400">{{ $product['description'] }}</p>
+                        <p class="mb-3 mt-2 font-normal text-gray-700 dark:text-gray-400 flex-grow">{{ Str::words($product['description'], 15, '...') }}</p>
                         <div class="flex items-center justify-between">
                             <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product['price'] }}</span>
                             <a href="#"
