@@ -19,7 +19,7 @@ class SerieFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'brand_id' => Brand::factory(),
+            'brand_id' => Brand::inRandomOrder()->first()->id,
             'launch_year' => $this->faker->year,
         ];
     }
