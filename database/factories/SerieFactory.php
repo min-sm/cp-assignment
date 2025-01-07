@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Serie>
  */
-class CategoryFactory extends Factory
+class SerieFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +18,9 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->word,
+            'brand_id' => Brand::factory(),
+            'launch_year' => $this->faker->year,
         ];
     }
 }
