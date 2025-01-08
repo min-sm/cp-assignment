@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,11 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="grid place-items-center h-screen bg-gray-100">
-    @yield('content')
+
+<body class="min-h-screen bg-gray-100 py-12">
+    <div class="container mx-auto px-4 flex items-center justify-center min-h-[calc(100vh-6rem)]">
+        @yield('content')
+    </div>
 </body>
+
 </html>
