@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -23,7 +24,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/github/callback', [AuthController::class, 'githubCallback']);
 });
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::get('/products', [ProductController::class, 'index'])->name('products');
 
 Route::get('/test', function () {
     return view('pages.test');

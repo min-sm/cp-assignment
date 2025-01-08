@@ -19,15 +19,15 @@
 
 </head>
 
-<body>
-    <div>
+<body class="flex flex-col min-h-screen">
+    <div class="flex flex-col flex-grow">
         <header>
             @include('includes.header')
         </header>
-        <div>
+        <main class="flex-grow">
             @yield('content')
-        </div>
-        <footer>
+        </main>
+        <footer class="bg-white shadow dark:bg-gray-900">
             @include('includes.footer')
         </footer>
     </div>
