@@ -83,7 +83,7 @@ class AuthController extends Controller
 
         $name = $githubUser->name ?? $githubUser->nickname;
 
-        $user = User::firstOrCreate([
+        $user = User::updateOrCreate([
             'email' => $githubUser->email
         ], [
             'name' => $name,
