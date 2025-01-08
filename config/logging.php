@@ -129,7 +129,7 @@ return [
 
         'auth' => [
             'driver' => 'single',
-            'path' => storage_path('logs/registration.log'),
+            'path' => storage_path('logs/auth.log'),
             'level' => 'info',
         ],
     ],

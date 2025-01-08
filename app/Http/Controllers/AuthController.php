@@ -76,15 +76,22 @@ class AuthController extends Controller
     public function githubCallback()
     {
         $githubUser = Socialite::driver('github')->user();
+
+        if (!$githubUser->email) {
+            return redirect()->route('login')->with('error', 'GitHub account does not have an email address.');
+        }
+
+        $name = $githubUser->name ?? $githubUser->nickname;
+
         $user = User::firstOrCreate([
             'email' => $githubUser->email
         ], [
-            'name' => $githubUser->name,
+            'name' => $name,
             'password' => Hash::make(Str::random(24))
         ]);
 
         Auth::login($user, true);
-        Log::channel('registration')->info('New user registered via GitHub: ' . $githubUser->email);
+        Log::channel('auth')->info('New user registered via GitHub: ' . $githubUser->email);
         return redirect('/');
     }
 
