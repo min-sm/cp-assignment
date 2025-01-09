@@ -6,7 +6,7 @@
 
     <div
         class="block max-w-sm w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-32 mx-auto mb-4 rounded-md shadow-sm">
+        <img src="{{ asset('img/common/logo.png') }}" alt="logo" class="w-32 mx-auto mb-4 rounded-md shadow-sm">
         <p class="text-lg font-semibold text-center text-gray-700 dark:text-gray-300 mb-8">
             Log in
         </p>

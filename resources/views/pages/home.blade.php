@@ -11,26 +11,26 @@
         <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
             <!-- Item 1 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{{ asset('img/slider-1.jpg') }}" class="absolute inset-0 w-full h-full object-cover" alt="...">
+                <img src="{{ asset('img/homepage/slider-1.jpg') }}" class="absolute inset-0 w-full h-full object-cover" alt="...">
             </div>
             <!-- Item 2 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{{ asset('img/slider-2.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                <img src="{{ asset('img/homepage/slider-2.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                     alt="...">
             </div>
             <!-- Item 3 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{{ asset('img/slider-3.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                <img src="{{ asset('img/homepage/slider-3.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                     alt="...">
             </div>
             <!-- Item 4 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{{ asset('img/slider-4.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                <img src="{{ asset('img/homepage/slider-4.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                     alt="...">
             </div>
             <!-- Item 5 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{{ asset('img/slider-5.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                <img src="{{ asset('img/homepage/slider-5.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                     alt="...">
             </div>
         </div>
