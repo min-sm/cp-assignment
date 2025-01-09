@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\Serie;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,12 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'model' => $this->faker->unique()->word, // Generates a unique model name
+            'series_id' => Serie::inRandomOrder()->first()->id, // Associates with a Series (creates one if none exists)
+            'category_id' => Category::inRandomOrder()->first()->id, // Associates with a Category (creates one if none exists)
+            'description' => $this->faker->paragraph, // Generates a random description
+            'price' => $this->faker->randomFloat(2, 10, 1000), // Generates a price between 10 and 1000
+            'stock_quantity' => $this->faker->numberBetween(0, 100), // Generates a stock quantity between 0 and 100
         ];
     }
 }

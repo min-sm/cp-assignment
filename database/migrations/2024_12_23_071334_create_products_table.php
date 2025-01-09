@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('model');
-            $table->foreignId('series_id')->constrained('series')->onDelete('set null');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('set null');
+            $table->string('slug')->unique();
+            $table->foreignId('series_id')->nullable()->constrained('series')->onDelete('set null'); // Allow NULL
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2)->check('price >= 0');
             $table->integer('stock_quantity')->check('stock_quantity >= 0');

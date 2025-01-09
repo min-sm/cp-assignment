@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Brand;
+use App\Models\Product;
 use App\Models\Serie;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,7 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Brand::factory()->count(5)->create();
-        Serie::factory()->count(5)->create();
+        // Brand::factory()->count(5)->create();
+        Serie::factory()->count(10)->create();
+        Product::factory()->count(50)->create();
     }
 }
