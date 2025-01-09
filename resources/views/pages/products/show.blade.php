@@ -3,5 +3,5 @@
 @section('title', $product->model)
 
 @section('content')
-
+    <p>{{ $product->slug }}</p>
 @endsection

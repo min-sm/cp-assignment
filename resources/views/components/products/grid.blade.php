@@ -6,4 +6,6 @@
             <x-products.card :product="$product" />
         @endforeach
     </div>
+
+    {{ $slot }}
 </div>

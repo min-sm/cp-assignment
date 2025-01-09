@@ -16,7 +16,7 @@
     {{-- blade-formatter-enable --}}
     {{-- Load TailwindCSS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    @livewireStyles
 </head>
 
 <body class="flex flex-col min-h-screen">
@@ -31,6 +31,7 @@
             @include('includes.footer')
         </footer>
     </div>
+    @livewireScripts
 </body>
 
 </html>
