@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,8 +15,10 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
-
+        $product = Product::with(['images', 'category', 'series.brand'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+        Debugbar::info($product);
         return view('pages.products.show', compact('product'));
     }
 }

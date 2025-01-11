@@ -43,7 +43,7 @@ class Product extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function ($model) {
-                return $model->model . ' ' . $model->series->brand->name;
+                return $model->series->brand->name . ' ' . $model->model;
             })
             ->saveSlugsTo('slug');
     }

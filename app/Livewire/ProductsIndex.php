@@ -13,7 +13,7 @@ class ProductsIndex extends Component
 
     public function render()
     {
-        $products = Product::with('images')->paginate(16);
+        $products = Product::with(['images', 'category', 'series.brand'])->paginate(16);
         Debugbar::info($products->items());
         return view('livewire.products-index', compact('products'));
     }

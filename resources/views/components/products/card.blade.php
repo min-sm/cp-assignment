@@ -10,14 +10,18 @@
     <div class="px-5 pb-5 flex flex-col flex-grow">
         <a href="{{ route('product.show', ['slug' => $product->slug]) }}">
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                {{ Str::words($product['model'], 7, '...') }}
+                {{ Str::words($product->model, 7, '...') }}
             </h5>
         </a>
+        <div class="flex justify-between">
+            <h6>{{ $product->category->name }}</h6>
+            <h6>{{ explode(' ', $product->series->brand->name)[0] }}</h6>
+        </div>
         <p class="mb-3 mt-2 font-normal text-gray-700 dark:text-gray-400 flex-grow">
-            {{ Str::words($product['description'], 15, '...') }}
+            {{ Str::words($product->description, 15, '...') }}
         </p>
         <div class="flex items-center justify-between">
-            <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product['price'] }}</span>
+            <span class="text-3xl font-bold text-gray-900 dark:text-white">${{ $product->price }}</span>
             <a href=""
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Add to cart
