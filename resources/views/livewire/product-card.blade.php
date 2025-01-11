@@ -14,11 +14,11 @@
             </h5>
         </a>
         <div class="flex justify-between">
-            <button wire:click="$set('selectedCategory', '{{ $product->category->id }}')"
+            <button wire:click="$dispatch('set-category', { categoryId: '{{ $product->category->id }}' })"
                 class="text-sm text-gray-600 hover:text-blue-600 hover:underline">
                 {{ $product->category->name }}
             </button>
-            <button wire:click="$set('selectedBrand', '{{ $product->series->brand->id }}')"
+            <button wire:click="$dispatch('set-brand', { brandId: '{{ $product->series->brand->id }}' })"
                 class="text-sm text-gray-600 hover:text-blue-600 hover:underline">
                 {{ explode(' ', $product->series->brand->name)[0] }}
             </button>
