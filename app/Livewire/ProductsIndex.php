@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Http\Request;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -19,24 +20,16 @@ class ProductsIndex extends Component
     public $selectedBrand = '';
     public $sortBy = '';
 
+    public function mount()
+    {
+        $this->selectedCategory = request()->get('category', '');
+        $this->selectedBrand = request()->get('brand', '');
+    }
+
     public function searchProducts()
     {
         $this->resetPage();
     }
-
-    // #[On('set-category')]
-    // public function setCategory($categoryId)
-    // {
-    //     $this->selectedCategory = $categoryId;
-    //     $this->resetPage();
-    // }
-
-    // #[On('set-brand')]
-    // public function setBrand($brandId)
-    // {
-    //     $this->selectedBrand = $brandId;
-    //     $this->resetPage();
-    // }
 
     public function render()
     {

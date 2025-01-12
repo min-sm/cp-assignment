@@ -1,11 +1,11 @@
 @if ($paginator->hasPages())
     <nav aria-label="Page navigation" role="navigation">
-        <ul class="inline-flex -space-x-px text-base h-10 mt-8 mb-4">
+        <ul class="inline-flex -space-x-px text-sm mt-8 mb-4">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <li>
                     <span
-                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-400 bg-white border border-e-0 border-gray-300 rounded-s-lg cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Previous</span>
+                        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-400 bg-white border border-e-0 border-gray-300 rounded-s-lg cursor-not-allowed dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">Previous</span>
                 </li>
             @else
                 <li>
