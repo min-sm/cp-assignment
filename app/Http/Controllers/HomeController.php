@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $request->session()->flush();
         $products = [
             [
                 'image' => 'img/slider-1.jpg',

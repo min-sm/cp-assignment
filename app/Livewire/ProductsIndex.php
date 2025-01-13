@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -31,7 +32,6 @@ class ProductsIndex extends Component
                 $this->selectedBrand = $this->filters['brand_id'];
             }
         }
-        Debugbar::info($this->filters);
     }
 
     public function searchProducts()
