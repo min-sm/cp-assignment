@@ -14,16 +14,17 @@
         <div class="flex justify-between">
             <!-- Category Link -->
             <a href="{{ route('products') }}" class="pointer hover:text-blue-600 block"
-               wire:click.prevent="setCategorySession({{ $product->category->id }})">
+                wire:click.prevent="setCategorySession({{ $product->category->id }})">
                 {{ $product->category->name }}
             </a>
-        
+
             <!-- Brand Link -->
             <a href="{{ route('products') }}" class="pointer hover:text-blue-600 block"
-               wire:click.prevent="setBrandSession({{ $product->series->brand->id }})">
+                wire:click.prevent="setBrandSession({{ $product->series->brand->id }})">
                 {{ explode(' ', $product->series->brand->name)[0] }}
             </a>
         </div>
+
         <p class="mb-3 mt-2 font-normal text-gray-700 dark:text-gray-400 flex-grow">
             {{ Str::words($product->description, 15, '...') }}
         </p>
