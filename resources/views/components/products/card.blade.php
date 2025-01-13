@@ -15,7 +15,7 @@
         </a>
         <div class="flex justify-between">
             <h6>
-                <form action="{{ route('products') }}" method="POST" class="inline">
+                <form action="{{ route('products.filter') }}" method="POST" class="inline">
                     @csrf
                     <input type="hidden" name="filter_type" value="category">
                     <input type="hidden" name="category_id" value="{{ $product->category->id }}">
@@ -25,7 +25,7 @@
                 </form>
             </h6>
             <h6>
-                <form action="{{ route('products') }}" method="POST" class="inline">
+                <form action="{{ route('products.filter') }}" method="POST" class="inline">
                     @csrf
                     <input type="hidden" name="filter_type" value="brand">
                     <input type="hidden" name="brand_id" value="{{ $product->series->brand->id }}">

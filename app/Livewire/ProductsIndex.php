@@ -19,11 +19,19 @@ class ProductsIndex extends Component
     public $selectedCategory = '';
     public $selectedBrand = '';
     public $sortBy = '';
+    public $filters;
 
-    public function mount()
+    public function mount($filters = [])
     {
-        $this->selectedCategory = request()->get('category', '');
-        $this->selectedBrand = request()->get('brand', '');
+        $this->filters = $filters ?? [];
+        if (!empty($this->filters)) {
+            if ($this->filters['filter_type'] == "category") {
+                $this->selectedCategory = $this->filters['category_id'];
+            } else if ($this->filters['filter_type'] == "brand") {
+                $this->selectedCategory = $this->filters['brand_id'];
+            }
+        }
+        Debugbar::info($this->filters);
     }
 
     public function searchProducts()
@@ -63,6 +71,7 @@ class ProductsIndex extends Component
         $categories = Category::all();
         $brands = Brand::all();
 
+        Debugbar::info($products->items());
         return view('livewire.products-index', compact('products', 'categories', 'brands'));
     }
 }
