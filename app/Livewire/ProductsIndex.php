@@ -28,7 +28,7 @@ class ProductsIndex extends Component
             if ($this->filters['filter_type'] == "category") {
                 $this->selectedCategory = $this->filters['category_id'];
             } else if ($this->filters['filter_type'] == "brand") {
-                $this->selectedCategory = $this->filters['brand_id'];
+                $this->selectedBrand = $this->filters['brand_id'];
             }
         }
         Debugbar::info($this->filters);
