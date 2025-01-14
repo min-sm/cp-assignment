@@ -32,6 +32,9 @@ class ProductsIndex extends Component
                 $this->selectedBrand = $this->filters['brand_id'];
             }
         }
+        Debugbar::info($this->filters);
+        Debugbar::info($this->selectedCategory);
+        Debugbar::info($this->selectedBrand);
     }
 
     public function searchProducts()
