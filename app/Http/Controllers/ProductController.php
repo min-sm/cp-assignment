@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Barryvdh\Debugbar\Facades\Debugbar;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        return view('pages.products.index', ['request' => []]);
+        return view('pages.products.index');
     }
 
     public function show($slug)
@@ -64,10 +63,5 @@ class ProductController extends Controller
 
         // Pass the product and related products to the view
         return view('pages.products.show', compact('product', 'products'));
-    }
-
-    public function filter(Request $request)
-    {
-        return view('pages.products.index', ['request' => $request->all()]);
     }
 }

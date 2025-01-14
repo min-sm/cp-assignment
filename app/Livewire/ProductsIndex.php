@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,24 +16,23 @@ class ProductsIndex extends Component
 {
     use WithPagination;
 
-    public $search = '';
-    public $selectedCategory = '';
-    public $selectedBrand = '';
-    public $sortBy = '';
-    public $filters;
-    public $pass;
+    public $search;
+    public $selectedCategory;
+    public $selectedBrand;
+    public $sortBy;
 
-    public function mount($filters = [])
+    public function mount()
     {
-        $this->filters = $filters ?? [];
-        if (!empty($this->filters)) {
-            if ($this->filters['filter_type'] == "category") {
-                $this->selectedCategory = $this->filters['category_id'];
-            } else if ($this->filters['filter_type'] == "brand") {
-                $this->selectedBrand = $this->filters['brand_id'];
-            }
+        Debugbar::info(Session::has('category_id'));
+        if (Session::has('category_id')) {
+            $this->selectedCategory = Session::get('category_id');
         }
-        Debugbar::info($this->filters);
+
+        Debugbar::info(Session::has('brand_id'));
+        if (Session::has('brand_id')) {
+            $this->selectedBrand = Session::get('brand_id');
+        }
+
         Debugbar::info($this->selectedCategory);
         Debugbar::info($this->selectedBrand);
     }
@@ -75,10 +75,6 @@ class ProductsIndex extends Component
         $brands = Brand::all();
 
         Debugbar::info($products->items());
-        return view('livewire.products-index', [
-            'products' => $products,
-            'categories' => $categories,
-            'brands' => $brands,
-        ]);
+        return view('livewire.products-index', compact('products', 'categories', 'brands'));
     }
 }

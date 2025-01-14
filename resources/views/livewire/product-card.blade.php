@@ -12,26 +12,17 @@
             </h5>
         </a>
         <div class="flex justify-between">
-            <h6>
-                <form action="{{ route('products.filter') }}" method="POST" class="inline">
-                    @csrf
-                    <input type="hidden" name="filter_type" value="category">
-                    <input type="hidden" name="category_id" value="{{ $product->category->id }}">
-                    <button type="submit" class="hover:text-blue-600">
-                        {{ $product->category->name }}
-                    </button>
-                </form>
-            </h6>
-            <h6>
-                <form action="{{ route('products.filter') }}" method="POST" class="inline">
-                    @csrf
-                    <input type="hidden" name="filter_type" value="brand">
-                    <input type="hidden" name="brand_id" value="{{ $product->series->brand->id }}">
-                    <button type="submit" class="hover:text-blue-600">
-                        {{ explode(' ', $product->series->brand->name)[0] }}
-                    </button>
-                </form>
-            </h6>
+            <!-- Category Link -->
+            <a href="{{ route('products') }}" class="pointer hover:text-blue-600 block"
+                wire:click.prevent="setCategorySession({{ $product->category->id }})">
+                {{ $product->category->name }}
+            </a>
+
+            <!-- Brand Link -->
+            <a href="{{ route('products') }}" class="pointer hover:text-blue-600 block"
+                wire:click.prevent="setBrandSession({{ $product->series->brand->id }})">
+                {{ explode(' ', $product->series->brand->name)[0] }}
+            </a>
         </div>
         <p class="mb-3 mt-2 font-normal text-gray-700 dark:text-gray-400 flex-grow">
             {{ Str::words($product->description, 15, '...') }}
