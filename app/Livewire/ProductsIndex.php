@@ -20,6 +20,7 @@ class ProductsIndex extends Component
     public $selectedBrand = '';
     public $sortBy = '';
     public $filters;
+    public $pass;
 
     public function mount($filters = [])
     {
@@ -74,6 +75,10 @@ class ProductsIndex extends Component
         $brands = Brand::all();
 
         Debugbar::info($products->items());
-        return view('livewire.products-index', compact('products', 'categories', 'brands'));
+        return view('livewire.products-index', [
+            'products' => $products,
+            'categories' => $categories,
+            'brands' => $brands,
+        ]);
     }
 }

@@ -56,8 +56,7 @@
         </div>
 
         <!-- Products Grid -->
-        <x-products.grid :products="$products">
-            {{ $products->links('vendor.livewire.flowbite') }}
-        </x-products.grid>
+        {{-- @livewire("products-grid", ["pass" => "Hello world", "products" => $products]) --}}
+        @livewire('products-grid', ['products' => $products])
     </div>
 </div>
