@@ -104,6 +104,4 @@
         <x-products.grid :products="$products" />
     </div>
 
-    <x-products.grid :products="$products" />
-
 @endsection

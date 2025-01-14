@@ -3,5 +3,5 @@
 @section('title', 'Products')
 
 @section('content')
-    @livewire('products-index')
+    @livewire('products-index', ['filters' => $request])
 @endsection
