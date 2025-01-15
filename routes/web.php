@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Livewire\Cart;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/cart', [Cart::class, 'render'])->name('cart');
 
 Route::fallback(function () {
     return view('errors.404');
