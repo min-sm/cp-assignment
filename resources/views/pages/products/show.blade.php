@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="max-w-screen-xl mx-auto p-4">
-        <div x-data="{ mainImage: '{{ asset('img/products/' . $product->slug . '/' . $product->images->first()?->filename) }}' }">
+        <div x-data="{ mainImage: '{{ $product->images->first() ? asset('img/products/' . $product->slug . '/' . $product->images->first()->filename) : asset('img/common/img-unavailable.jpg') }}' }">
             <div class="container mx-auto px-4 py-8">
                 <div class="flex flex-wrap -mx-4">
                     <!-- Product Images -->
