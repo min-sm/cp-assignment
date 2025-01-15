@@ -2,7 +2,7 @@
     class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
     <a href="{{ route('product.show', ['slug' => $product->slug]) }}">
         <img class="w-full h-48 object-cover p-8 rounded-t-lg"
-            src="{{ asset('img/products/' . $product->slug . '/' . $product->images->first()?->filename) }}"
+            src="{{ $product->images->first() ? asset('img/products/' . $product->slug . '/' . $product->images->first()->filename) : asset('img/common/img-unavailable.jpg') }}"
             alt="{{ $product->model }} image" />
     </a>
     <div class="px-5 pb-5 flex flex-col flex-grow">
