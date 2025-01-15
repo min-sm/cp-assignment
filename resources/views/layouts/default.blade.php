@@ -16,7 +16,8 @@
 <body class="flex flex-col min-h-screen">
     <div class="flex flex-col flex-grow">
         <header>
-            @include('includes.header')
+            {{-- @include('includes.header') --}}
+            @livewire('layout.header')
         </header>
         <main class="flex-grow @yield('mainClass')">
             @yield('content')
