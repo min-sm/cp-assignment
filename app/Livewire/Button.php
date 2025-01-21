@@ -24,6 +24,6 @@ class Button extends Component
     {
         Debugbar::info("clicked");
         Debugbar::info("Product in cart:", $this->product);
-        // $this->emit('cartUpdated');
+        $this->emit('cartUpdated');
     }
 }

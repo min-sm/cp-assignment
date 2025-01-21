@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="max-w-screen-xl mx-auto p-4">
-        <div x-data="{ mainImage: '{{ $product->images->first() ? asset('img/products/' . $product->slug . '/' . $product->images->first()->filename) : asset('img/common/img-unavailable.jpg') }}' }">
+        <div>
             <div class="container mx-auto px-4 py-8">
                 <div class="flex flex-wrap -mx-4">
                     <!-- Product Images -->
-                    <div class="w-full md:w-1/2 px-4 mb-8">
+                    <div class="w-full md:w-1/2 px-4 mb-8" x-data="{ mainImage: '{{ $product->images->first() ? asset('img/products/' . $product->slug . '/' . $product->images->first()->filename) : asset('img/common/img-unavailable.jpg') }}' }">
                         <!-- Main Image -->
                         <img :src="mainImage" alt="Product" class="w-full h-auto rounded-lg shadow-md mb-4">
 
