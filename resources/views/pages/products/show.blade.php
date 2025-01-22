@@ -10,18 +10,19 @@
                     <!-- Product Images -->
                     <div class="w-full md:w-1/2 px-4 mb-8" x-data="{ mainImage: '{{ $product->images->first() ? asset('img/products/' . $product->slug . '/' . $product->images->first()->filename) : asset('img/common/img-unavailable.jpg') }}' }">
                         <!-- Main Image -->
-                        <img :src="mainImage" alt="Product" class="w-full h-auto rounded-lg shadow-md mb-4">
+                        <div class="w-full h-64 sm:h-80 md:h-96 lg:h-112 xl:h-128 relative">
+                            <img :src="mainImage" alt="Product"
+                                class="w-full h-full object-cover rounded-lg shadow-md mb-4">
+                        </div>
 
                         <!-- Thumbnails -->
                         <div class="flex gap-4 py-4 justify-center overflow-x-auto">
-                            @forelse ($product->images as $image)
+                            @foreach ($product->images as $image)
                                 <img src="{{ asset('img/products/' . $product->slug . '/' . $image->filename) }}"
                                     alt="Thumbnail"
                                     class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
                                     @click="mainImage = '{{ asset('img/products/' . $product->slug . '/' . $image->filename) }}'">
-                            @empty
-                                <p class="text-gray-500 italic">No additional images available</p>
-                            @endforelse
+                            @endforeach
                         </div>
                     </div>
 
@@ -34,17 +35,7 @@
                         </div>
                         <p class="text-gray-700 mb-6">{{ $product->description }}</p>
 
-                        <!-- Quantity Input -->
-                        <div class="mb-6">
-                            <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity:</label>
-                            <input type="number" id="quantity" name="quantity" min="1" value="1"
-                                class="w-12 text-center rounded-md border-gray-300  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        </div>
-
-                        <!-- Buttons -->
-                        <div class="flex space-x-4 mb-6" wire:ignore.self>
-                            @livewire('button', ['product' => $product])
-                        </div>
+                        @livewire('button', ['product' => $product])
 
                         <!-- Key Features -->
                         <div>

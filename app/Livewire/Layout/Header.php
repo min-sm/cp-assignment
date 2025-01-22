@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Layout;
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Livewire\Component;
 
 class Header extends Component
@@ -12,14 +13,17 @@ class Header extends Component
 
     public function mount()
     {
-        // Initialize cart count from your cart service/session
-        $this->cartCount = session('cart', []) ? count(session('cart')) : 0;
+        $this->updateCartCount();
     }
 
     public function updateCartCount()
     {
-        // Update cart count when cart is modified
-        $this->cartCount = session('cart', []) ? count(session('cart')) : 0;
+        $cart = session('cart', []);
+        $this->cartCount = 0;
+
+        foreach ($cart as $item) {
+            $this->cartCount += $item['quantity'];
+        }
     }
 
     public function render()
