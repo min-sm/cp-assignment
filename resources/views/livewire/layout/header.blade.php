@@ -33,7 +33,7 @@
                 @if ($cartCount > 0)
                     <span
                         class="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full">
-                        {{ $cartCount }}
+                        {{ $cartCount > 9 ? '9+' : $cartCount }}
                     </span>
                 @endif
             </a>

@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
-Route::get('/cart', [Cart::class, 'render'])->name('cart');
+Route::get('/cart', Cart::class)->name('cart');
 
 Route::fallback(function () {
     return view('errors.404');
