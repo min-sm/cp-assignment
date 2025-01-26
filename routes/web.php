@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
 use App\Livewire\Cart;
 use Illuminate\Support\Facades\Route;
@@ -27,12 +28,15 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
 });
 
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/products', [ProductController::class, 'filter'])->name('products.filter');
 Route::get('/cart', Cart::class)->name('cart');
+
+Route::get('/inquiry', [InquiryController::class, 'index'])->name('inquiry');
 
 Route::fallback(function () {
     return view('errors.404');
