@@ -4,7 +4,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
-use App\Livewire\Cart;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -34,7 +33,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/products', [ProductController::class, 'filter'])->name('products.filter');
-Route::get('/cart', Cart::class)->name('cart');
+Route::get('/cart', function () {
+    return view('pages.cart');
+})->name('cart');
 
 Route::get('/inquiry', [InquiryController::class, 'index'])->name('inquiry');
 
