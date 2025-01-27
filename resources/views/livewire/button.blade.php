@@ -18,8 +18,8 @@
     <!-- Buttons -->
     <div class="flex space-x-4 mb-6">
         <button
-            class="flex gap-2 items-center px-6 py-2 rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 {{ $errors->has('quantity') ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 text-white' }}"
-            type="button" wire:click="clicked" @if ($errors->has('quantity')) disabled @endif>
+            class="flex gap-2 items-center px-6 py-2 rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 {{ $errors->has('quantity') || !auth()->check() ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 text-white' }}"
+            type="button" wire:click="clicked" @if ($errors->has('quantity') || !auth()->check()) disabled @endif>
             Add to Cart
         </button>
     </div>

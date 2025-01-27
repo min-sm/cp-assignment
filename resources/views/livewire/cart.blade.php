@@ -66,7 +66,7 @@
             <h2 class="text-2xl font-bold text-gray-800">Payment Details</h2>
             <div class="grid gap-4 mt-8">
                 <div>
-                    <label class="block text-base text-gray-800 mb-2">Card Holder Name</label>
+                    <label class="block text-base text-gray-800 mb-2">Name</label>
                     <input type="text" placeholder="John Doe"
                         class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm border border-gray-300 rounded-md focus:border-purple-500 outline-none" />
                 </div>
@@ -82,7 +82,7 @@
                                 class="hovered-path" data-original="#fed049" />
                         </svg>
                         <input type="number" placeholder="xxxx xxxx xxxx"
-                            class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm outline-none" />
+                            class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm outline-none border-none !ring-0" />
                     </div>
                 </div>
 
