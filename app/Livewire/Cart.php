@@ -28,14 +28,14 @@ class Cart extends Component
     public function decreaseQuantity($productId)
     {
         Debugbar::info("Entered decreaseQuantity");
-        // if (isset($this->products[$productId])) {
-        //     if ($this->products[$productId]['quantity'] > 1) {
-        //         $this->products[$productId]['quantity'] -= 1;
-        //         $this->updateCartSession();
-        //     } else {
-        //         $this->removeFromCart($productId);
-        //     }
-        // }
+        if (isset($this->products[$productId])) {
+            if ($this->products[$productId]['quantity'] > 1) {
+                $this->products[$productId]['quantity'] -= 1;
+                $this->updateCartSession();
+            } else {
+                $this->removeFromCart($productId);
+            }
+        }
     }
 
     public function removeFromCart($productId)
@@ -50,6 +50,7 @@ class Cart extends Component
     {
         // Update the session with the new cart data
         session(['cart' => $this->products]);
+        $this->dispatch('cartUpdated');
     }
 
     public function render()

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
@@ -28,6 +29,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
+    Route::post('/checkout/process', [OrderController::class, 'process'])->name('checkout.process');
+    Route::get('/history', [OrderController::class, 'history'])->name('history');
 });
 
 Route::get('/cart', fn() => view('pages.cart'))->name('cart');
