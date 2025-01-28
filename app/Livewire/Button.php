@@ -10,6 +10,10 @@ class Button extends Component
     public $product;
     public $quantity = 1;
 
+    protected $rules = [
+        'quantity' => 'required|numeric|min:1'
+    ];
+
     public function mount($product, $quantity = 1)
     {
         $this->product = $product;
@@ -19,6 +23,12 @@ class Button extends Component
     public function render()
     {
         return view('livewire.button');
+    }
+
+    public function updatedQuantity()
+    {
+        $this->rules['quantity'] = ['required', 'numeric', 'min:1', 'max:' . $this->product->stock_quantity];
+        $this->validate();
     }
 
     public function clicked()

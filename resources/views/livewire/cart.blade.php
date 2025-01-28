@@ -1,114 +1,130 @@
-@extends('layouts.default')
-
-@section('title', 'Cart')
-
-@section('content')
-    <div class="font-[sans-serif] bg-gradient-to-tr from-gray-200 via-gray-100 to-gray-50">
-        <div class="max-w-7xl max-lg:max-w-4xl mx-auto p-6">
-            <h2 class="text-2xl font-bold text-gray-800">Your shopping cart</h2>
-
-            <div class="grid lg:grid-cols-3 gap-4 relative mt-8">
-                <div class="lg:col-span-2 space-y-4">
+<div class="font-sans max-w-6xl max-lg:max-w-2xl mx-auto bg-white p-4">
+    <div class="grid lg:grid-cols-2 gap-12">
+        <div>
+            <div class="bg-gray-100 p-6 rounded-md">
+                <h2 class="text-2xl font-bold text-gray-800">Your Cart</h2>
+                <div class="space-y-4 mt-8">
                     @forelse ($products as $productId => $product)
-                        <div class="p-6 bg-white shadow-[0_0px_4px_0px_rgba(6,81,237,0.2)] rounded-md relative">
-                            <div class="flex items-center max-sm:flex-col gap-4 max-sm:gap-6">
-                                <!-- Product Image -->
-                                <div class="w-52 h-52 shrink-0">
-                                    <img src="{{ $product['image'] }}" class="w-full h-full object-contain"
-                                        alt="{{ $product['name'] }}" />
-                                </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-24 h-24 shrink-0 bg-white p-2 rounded-md">
+                                <img src="{{ $product['image'] }}" class="w-full h-full object-contain"
+                                    alt="{{ $product['name'] }}" />
+                            </div>
 
-                                <!-- Product Details -->
-                                <div class="sm:border-l sm:pl-4 sm:border-gray-300 w-full">
-                                    <h3 class="text-lg font-bold text-gray-800">{{ $product['name'] }}</h3>
+                            <div class="w-full">
+                                <h3 class="text-base font-semibold text-gray-800">{{ $product['name'] }}</h3>
+                                <h6 class="text-sm text-gray-800 font-bold cursor-pointer mt-0.5">
+                                    ${{ $product['price'] }}</h6>
 
-                                    <ul class="mt-4 text-sm text-gray-500 space-y-2">
-                                        <li>Price: ${{ $product['price'] }}</li>
-                                        <li>Quantity: {{ $product['quantity'] }}</li>
-                                    </ul>
+                                <div class="flex gap-4 mt-4">
+                                    <!-- Quantity Controls -->
+                                    <div class="flex">
+                                        <button type="button" wire:click="decreaseQuantity({{ $productId }})"
+                                            class="flex items-center justify-center w-6 h-6 border border-gray-300 text-gray-800 text-xs outline-none bg-transparent rounded-md">
+                                            -
+                                        </button>
+                                        <span class="mx-2.5">{{ $product['quantity'] }}</span>
+                                        <button type="button" wire:click="increaseQuantity({{ $productId }})"
+                                            class="flex items-center justify-center w-6 h-6 border border-gray-300 text-gray-800 text-xs outline-none bg-transparent rounded-md">
+                                            +
+                                        </button>
+                                    </div>
 
-                                    <hr class="border-gray-300 my-4" />
-
-                                    <div class="flex items-center justify-between flex-wrap gap-4">
-                                        <!-- Quantity Controls -->
-                                        <div class="flex items-center gap-3">
-                                            <h4 class="text-sm font-bold text-gray-800">Qty:</h4>
-                                            <button type="button"
-                                                class="flex items-center justify-center w-5 h-5 bg-blue-600 outline-none rounded-full">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-2 fill-white"
-                                                    viewBox="0 0 124 124">
-                                                    <path
-                                                        d="M112 50H12C5.4 50 0 55.4 0 62s5.4 12 12 12h100c6.6 0 12-5.4 12-12s-5.4-12-12-12z"
-                                                        data-original="#000000"></path>
-                                                </svg>
-                                            </button>
-                                            <span class="font-bold text-sm leading-[16px]">{{ $product['quantity'] }}</span>
-                                            <button type="button"
-                                                class="flex items-center justify-center w-5 h-5 bg-blue-600 outline-none rounded-full">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-2 fill-white"
-                                                    viewBox="0 0 42 42">
-                                                    <path
-                                                        d="M37.059 16H26V4.941C26 2.224 23.718 0 21 0s-5 2.224-5 4.941V16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H16v11.059C16 39.776 18.282 42 21 42s5-2.224 5-4.941V26h11.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"
-                                                        data-original="#000000"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-
-                                        <!-- Product Price -->
-                                        <div class="flex items-center">
-                                            <h4 class="text-lg font-bold text-gray-800">
-                                                ${{ $product['price'] * $product['quantity'] }}</h4>
-                                            <!-- Remove Button -->
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 cursor-pointer shrink-0 fill-gray-400 hover:fill-red-500 absolute top-3.5 right-3.5"
-                                                viewBox="0 0 320.591 320.591">
-                                                <path
-                                                    d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
-                                                    data-original="#000000"></path>
-                                                <path
-                                                    d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
-                                                    data-original="#000000"></path>
+                                    <!-- Remove Button -->
+                                    <div class="ml-auto">
+                                        <button type="button" wire:click="removeFromCart({{ $productId }})">
+                                            <svg class="w-6 h-6 text-red-500 hover:text-red-700" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="currentColor" viewBox="0 0 24 24">
+                                                <path fill-rule="evenodd"
+                                                    d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                                                    clip-rule="evenodd" />
                                             </svg>
-                                        </div>
+
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <hr class="border-gray-300" />
                     @empty
                         <p class="text-gray-500">Your cart is empty.</p>
                     @endforelse
                 </div>
+            </div>
 
-                <!-- Order Summary -->
-                <div class="bg-white h-max rounded-md p-6 shadow-[0_0px_4px_0px_rgba(6,81,237,0.2)] sticky top-0">
-                    <h3 class="text-lg font-bold text-gray-800">Order Summary</h3>
-
-                    <ul class="text-gray-800 text-sm divide-y mt-4">
-                        <!-- Subtotal -->
-                        <li class="flex flex-wrap gap-4 py-3">Subtotal
-                            <span
-                                class="ml-auto font-bold">${{ array_sum(array_map(fn($product) => $product['price'] * $product['quantity'], $products)) }}</span>
-                        </li>
-                        <!-- Shipping -->
-                        <li class="flex flex-wrap gap-4 py-3">Shipping
-                            <span class="ml-auto font-bold">$4.00</span>
-                        </li>
-                        <!-- Tax -->
-                        <li class="flex flex-wrap gap-4 py-3">Tax
-                            <span class="ml-auto font-bold">$4.00</span>
-                        </li>
-                        <!-- Total -->
-                        <li class="flex flex-wrap gap-4 py-3 font-bold">Total
-                            <span
-                                class="ml-auto">${{ array_sum(array_map(fn($product) => $product['price'] * $product['quantity'], $products)) + 8 }}</span>
-                        </li>
-                    </ul>
-
-                    <button type="button"
-                        class="mt-4 text-sm px-4 py-2.5 tracking-wide w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md">Make
-                        Payment</button>
-                </div>
+            <div class="mt-4 flex flex-wrap justify-center gap-4">
+                <img src='https://readymadeui.com/images/master.webp' alt="card1" class="w-12 object-contain" />
+                <img src='https://readymadeui.com/images/visa.webp' alt="card2" class="w-12 object-contain" />
+                <img src='https://readymadeui.com/images/american-express.webp' alt="card3"
+                    class="w-12 object-contain" />
             </div>
         </div>
+
+        <form action="{{ route('checkout.process') }}" method="POST" x-data="{ paymentMethod: 'cash_on_delivery' }">
+            @csrf
+            <h2 class="text-2xl font-bold text-gray-800">Payment Details</h2>
+            <div class="grid gap-4 mt-8">
+                <div>
+                    <label class="block text-base text-gray-800 mb-2">Name</label>
+                    <input type="text" name="name" id="name" placeholder="John Doe"
+                        class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm border border-gray-300 rounded-md focus:border-purple-500 outline-none" />
+                </div>
+
+                <div>
+                    <label for="address" class="block text-base text-gray-800 mb-2">Your Address</label>
+                    <textarea id="address" name="address" rows="4"
+                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Write your address here..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-base text-gray-800 mb-2">Payment Method</label>
+                    <div class="flex items-center gap-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="payment_method" id="cash_on_delivery" value="cash_on_delivery"
+                                x-model="paymentMethod" class="form-radio">
+                            <span class="ml-2">Cash on Delivery</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="payment_method" id="kbzpay" value="kbzpay"
+                                x-model="paymentMethod" class="form-radio">
+                            <span class="ml-2">KBZPay</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div x-show="paymentMethod === 'kbzpay'" x-cloak>
+                    <label class="block text-base text-gray-800 mb-2">KBZPay Number</label>
+                    <div
+                        class="flex bg-transparent border border-gray-300 rounded-md focus-within:border-purple-500 overflow-hidden">
+                        <img src="{{ asset('img/common/kbzpay.png') }}" alt="kbzpay logo" class="h-10">
+                        <input type="tel" name="kbzpay_number" id="kbzpay_number" placeholder="+959 xxxx xxxx"
+                            pattern="\+959\d{5,8}"
+                            class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm outline-none border-none !ring-0" />
+                    </div>
+                </div>
+            </div>
+
+            <ul class="text-gray-800 mt-8 space-y-4">
+                <li class="flex flex-wrap gap-4 text-sm">Subtotal <span
+                        class="ml-auto font-bold">${{ array_sum(array_map(fn($product) => $product['price'] * $product['quantity'], $products)) }}</span>
+                </li>
+                <li class="flex flex-wrap gap-4 text-sm">Discount <span class="ml-auto font-bold">$0.00</span></li>
+                <li class="flex flex-wrap gap-4 text-sm">Delivery fee <span class="ml-auto font-bold">$4.00</span></li>
+                <hr class="border-gray-300" />
+                <li class="flex flex-wrap gap-4 text-sm font-bold">Total <span
+                        class="ml-auto">${{ array_sum(array_map(fn($product) => $product['price'] * $product['quantity'], $products)) + 4 }}</span>
+                </li>
+            </ul>
+
+            <input type="hidden" name="total"
+                value="{{ array_sum(array_map(fn($product) => $product['price'] * $product['quantity'], $products)) + 4 }}">
+
+            <button type="submit"
+                class="mt-8 text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-purple-600 hover:bg-purple-700 text-white rounded-md">Make
+                Payment</button>
+        </form>
     </div>
-@endsection
+</div>
