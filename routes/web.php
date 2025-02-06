@@ -44,6 +44,13 @@ Route::fallback(function () {
     return view('errors.404');
 });
 
+Route::prefix('admin')->group(function () {
+// Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::resource('products', ProductController::class);
+    Route::resource('orders', OrderController::class);
+    Route::get('/', fn() => view("admin.dashboard"))->name('admin.dashboard');
+});
+
 Route::get('/test', function () {
     return view('pages.test');
 });
