@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -21,6 +20,7 @@ class HomeController extends Controller
         // Step 2: Check stock availability and get the products
         $products = Product::whereIn('id', $mostSoldItems)
             ->where('stock_quantity', '>', 0)
+            ->orderByRaw("FIELD(id, " . implode(',', $mostSoldItems->toArray()) . ")")
             ->get();
 
         // Step 3: If less than 4 products, fill the rest with products having the highest stock quantities
