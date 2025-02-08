@@ -68,6 +68,7 @@ class ProductsIndex extends Component
                         break;
                 }
             })
+            ->where('stock_quantity', '>', 0)
             ->paginate(12);
 
         $categories = Category::all();
