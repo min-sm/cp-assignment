@@ -37,6 +37,7 @@ Route::get('/cart', fn() => view('pages.cart'))->name('cart');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/products', [ProductController::class, 'filter'])->name('products.filter');
+Route::get('/about-us', fn() => view('pages.about'))->name('about');
 
 Route::fallback(function () {
     return view('errors.404');

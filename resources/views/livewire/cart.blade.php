@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <form action="{{ route('checkout.process') }}" method="POST" x-data="{ paymentMethod: 'cash_on_delivery' }">
+        <form action="{{ route('checkout.process') }}" method="POST" x-data="{ paymentMethod: 'Cash on Delivery' }">
             @csrf
             <h2 class="text-2xl font-bold text-gray-800">Payment Details</h2>
             <div class="grid gap-4 mt-8">
@@ -83,19 +83,19 @@
                     <label class="block text-base text-gray-800 mb-2">Payment Method</label>
                     <div class="flex items-center gap-4">
                         <label class="flex items-center">
-                            <input type="radio" name="payment_method" id="cash_on_delivery" value="cash_on_delivery"
+                            <input type="radio" name="payment_method" id="cash_on_delivery" value="Cash on Delivery"
                                 x-model="paymentMethod" class="form-radio">
                             <span class="ml-2">Cash on Delivery</span>
                         </label>
                         <label class="flex items-center">
-                            <input type="radio" name="payment_method" id="kbzpay" value="kbzpay"
+                            <input type="radio" name="payment_method" id="kbzpay" value="KBZPay"
                                 x-model="paymentMethod" class="form-radio">
                             <span class="ml-2">KBZPay</span>
                         </label>
                     </div>
                 </div>
 
-                <div x-show="paymentMethod === 'kbzpay'" x-cloak>
+                <div x-show="paymentMethod === 'KBZPay'" x-cloak>
                     <label class="block text-base text-gray-800 mb-2">KBZPay Number</label>
                     <div
                         class="flex bg-transparent border border-gray-300 rounded-md focus-within:border-purple-500 overflow-hidden">
