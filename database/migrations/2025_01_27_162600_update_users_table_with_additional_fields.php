@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable()->after('email'); // Phone number (nullable)
             $table->string('address')->nullable()->after('phone_number'); // Address (nullable)
             $table->string('profile_picture')->nullable()->after('address'); // Profile picture filename (nullable)
+            $table->enum('role', ['admin', 'customers'])->default('customers')->after('password');
         });
     }
 
