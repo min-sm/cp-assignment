@@ -54,12 +54,6 @@
                 </div>
             </div>
 
-            <div class="mt-4 flex flex-wrap justify-center gap-4">
-                <img src='https://readymadeui.com/images/master.webp' alt="card1" class="w-12 object-contain" />
-                <img src='https://readymadeui.com/images/visa.webp' alt="card2" class="w-12 object-contain" />
-                <img src='https://readymadeui.com/images/american-express.webp' alt="card3"
-                    class="w-12 object-contain" />
-            </div>
         </div>
 
         <form action="{{ route('checkout.process') }}" method="POST" x-data="{ paymentMethod: 'Cash on Delivery' }">
@@ -69,14 +63,15 @@
                 <div>
                     <label class="block text-base text-gray-800 mb-2">Name</label>
                     <input type="text" name="name" id="name" placeholder="John Doe"
-                        class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm border border-gray-300 rounded-md focus:border-purple-500 outline-none" />
+                        class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm border border-gray-300 rounded-md focus:border-purple-500 outline-none"
+                        value="{{ old('name', auth()->user()->name ?? '') }}" />
                 </div>
 
                 <div>
                     <label for="address" class="block text-base text-gray-800 mb-2">Your Address</label>
                     <textarea id="address" name="address" rows="4"
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Write your address here..."></textarea>
+                        placeholder="Write your address here...">{{ old('address', auth()->user()->address ?? '') }}</textarea>
                 </div>
 
                 <div>
@@ -84,12 +79,14 @@
                     <div class="flex items-center gap-4">
                         <label class="flex items-center">
                             <input type="radio" name="payment_method" id="cash_on_delivery" value="Cash on Delivery"
-                                x-model="paymentMethod" class="form-radio">
+                                x-model="paymentMethod" class="form-radio"
+                                {{ old('payment_method') === 'Cash on Delivery' ? 'checked' : '' }}>
                             <span class="ml-2">Cash on Delivery</span>
                         </label>
                         <label class="flex items-center">
                             <input type="radio" name="payment_method" id="kbzpay" value="KBZPay"
-                                x-model="paymentMethod" class="form-radio">
+                                x-model="paymentMethod" class="form-radio"
+                                {{ old('payment_method') === 'KBZPay' ? 'checked' : '' }} />
                             <span class="ml-2">KBZPay</span>
                         </label>
                     </div>
@@ -101,8 +98,8 @@
                         class="flex bg-transparent border border-gray-300 rounded-md focus-within:border-purple-500 overflow-hidden">
                         <img src="{{ asset('img/common/kbzpay.png') }}" alt="kbzpay logo" class="h-10">
                         <input type="tel" name="kbzpay_number" id="kbzpay_number" placeholder="+959 xxxx xxxx"
-                            pattern="\+959\d{5,8}"
-                            class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm outline-none border-none !ring-0" />
+                            class="px-4 py-2.5 bg-transparent text-gray-800 w-full text-sm outline-none border-none !ring-0"
+                            value="{{ old('kbzpay_number', auth()->user()->phone_number ?? '') }}">
                     </div>
                 </div>
             </div>

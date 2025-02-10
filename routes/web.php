@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
     Route::post('/checkout/process', [OrderController::class, 'process'])->name('checkout.process');
     Route::get('/history', [OrderController::class, 'history'])->name('history');
+    Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.submit');
 });
 
 Route::get('/cart', fn() => view('pages.cart'))->name('cart');
