@@ -19,7 +19,7 @@
                     @csrf
                     <input type="hidden" name="filter_type" value="category">
                     <input type="hidden" name="category_id" value="{{ $product->category->id }}">
-                    <button type="submit" class="hover:text-blue-600">
+                    <button type="submit" class="hover:text-blue-600 dark:hover:text-blue-400 text-gray-900 dark:text-white">
                         {{ $product->category->name }}
                     </button>
                 </form>
@@ -29,7 +29,7 @@
                     @csrf
                     <input type="hidden" name="filter_type" value="brand">
                     <input type="hidden" name="brand_id" value="{{ $product->series->brand->id }}">
-                    <button type="submit" class="hover:text-blue-600">
+                    <button type="submit" class="hover:text-blue-600 dark:hover:text-blue-400 text-gray-900 dark:text-white">
                         {{ explode(' ', $product->series->brand->name)[0] }}
                     </button>
                 </form>

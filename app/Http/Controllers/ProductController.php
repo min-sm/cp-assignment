@@ -29,6 +29,7 @@ class ProductController extends Controller
                 $query->where('brand_id', $product->series->brand_id);
             })
             ->where('id', '!=', $product->id) // Exclude the current product
+            ->where('stock_quantity', '>', '0')
             ->take(4)
             ->get();
 
