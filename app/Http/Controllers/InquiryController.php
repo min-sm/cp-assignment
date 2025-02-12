@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inquiry;
+use App\Models\InquiryImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,19 +24,32 @@ class InquiryController extends Controller
         // Validate the form data
         $request->validate([
             'email' => 'required|email',
-            'subject' => 'required|string|max:255',
+            'subject' => 'nullable|string|max:255',
             'message' => 'required|string',
-            'files.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Optional file uploads
+            'files' => 'max:3',
+            'files.*' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Process the form data (e.g., save to database, send email, etc.)
-        // Example: Save to database
-        // Inquiry::create([
-        //     'user_id' => Auth::id(),
-        //     'email' => $request->email,
-        //     'subject' => $request->subject,
-        //     'message' => $request->message,
-        // ]);
+        $inquiry = Inquiry::create([
+            'user_id' => Auth::id(),
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ]);
+
+        // Handle file uploads (if any)
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                // Store the file in the 'public/inquiry_images' directory
+                $path = $file->store('img/inquiry/' . $inquiry->id, 'public');
+
+                // Save the image path to the inquiry_images table
+                InquiryImage::create([
+                    'inquiry_id' => $inquiry->id,
+                    'image_path' => $path,
+                ]);
+            }
+        }
 
         // Redirect back with success message
         return redirect()->route('inquiry')->with('success', 'Your inquiry has been submitted successfully!');
