@@ -11,7 +11,7 @@
             @if (session('success'))
                 <x-alert type="success" message="{{ session('success') }}" />
             @endif
-            <form action="{{ route('inquiry.submit') }}" method="POST" class="space-y-8">
+            <form action="{{ route('inquiry.submit') }}" method="POST" class="space-y-8" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
@@ -25,7 +25,7 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Subject</label>
                     <input type="text" id="subject" name="subject"
                         class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                        placeholder="Let us know how we can help you" value="{{ old('subject') }}" required>
+                        placeholder="Let us know how we can help you" value="{{ old('subject') }}">
                 </div>
                 <div class="sm:col-span-2">
                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
