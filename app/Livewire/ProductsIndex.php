@@ -74,7 +74,7 @@ class ProductsIndex extends Component
         $categories = Category::all();
         $brands = Brand::all();
 
-        Debugbar::info($products->items());
+        Debugbar::info($products->map(fn($product) => $product->id));
         return view('livewire.products-index', compact('products', 'categories', 'brands'));
     }
 }

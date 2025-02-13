@@ -3,7 +3,7 @@
 @section('title', 'Products')
 
 @section('content')
-    <div class="max-w-screen-xl mx-auto p-4">
+    <div class="max-w-screen-xl mx-auto p-4 mb-2">
         <p class="text-3xl font-semibold text-gray-900 dark:text-white">Order History</p>
 
         @if (session('success'))
@@ -66,7 +66,7 @@
                                     </td>
                                 @endif
                                 <td class="border-b relative h-24">
-                                    <img src="{{ $item->product->images->first() ? Storage::url($this->product->images->first()->image_path) : asset('img/common/img-unavailable.jpg') }}"
+                                    <img src="{{ $item->product->images->first() ? Storage::url($item->product->images->first()->image_path) : asset('img/common/img-unavailable.jpg') }}"
                                         alt="{{ $item->product->model }}"
                                         class="absolute top-0 left-0 w-full h-full object-cover">
                                 </td>
