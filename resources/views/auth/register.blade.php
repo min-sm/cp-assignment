@@ -35,10 +35,14 @@
             </button>
         </form>
 
-        <p class="text-sm text-center text-gray-600 dark:text-gray-400 mt-4">
-            Already have an account? <a href="{{ route('login') }}"
-                class="text-blue-600 hover:underline dark:text-blue-400">Login</a>
-        </p>
+        <div class="text-sm text-center text-gray-600 dark:text-gray-400 mt-4 ">
+            <p class="mb-2">
+                Already have an account? <a href="{{ route('login') }}"
+                    class="text-blue-600 hover:underline dark:text-blue-400">Login</a>
+            </p>
+            <a href="{{ route('home') }}" class="hover:underline hover:text-blue-600 dark:hover:text-blue-400">Continue
+                as guest</a>
+        </div>
     </div>
 
 @endsection
