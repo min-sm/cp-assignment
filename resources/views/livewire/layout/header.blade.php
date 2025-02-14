@@ -98,6 +98,12 @@
                                     About Us
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('inquiry') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    Inquiry
+                                </a>
+                            </li>
                         </ul>
                         <div class="py-1" x-data>
                             @auth

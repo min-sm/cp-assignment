@@ -15,7 +15,7 @@ class OrderController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'payment_method' => 'required|string',
+            'payment_method' => 'required|string|in:Cash on Delivery,KBZPay',
             'kbzpay_number' => 'nullable|string',
             'total' => 'required|numeric',
         ]);

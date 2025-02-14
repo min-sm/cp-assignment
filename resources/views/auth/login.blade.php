@@ -10,6 +10,13 @@
         <p class="text-lg font-semibold text-center text-gray-700 dark:text-gray-300 mb-8">
             Log in
         </p>
+        @if (session('success'))
+            <x-alert type="success" message="{{ session('success') }}" />
+        @endif
+
+        @if (session('error'))
+            <x-alert type="error" message="{{ session('error') }}" />
+        @endif
         <form class="max-w-sm mx-auto" action="/login" method="POST">
             @csrf
 
@@ -44,5 +51,6 @@
                 class="text-blue-600 hover:underline dark:text-blue-400">Register</a>
         </p>
     </div>
+
 
 @endsection

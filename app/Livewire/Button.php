@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Button extends Component
@@ -45,7 +46,7 @@ class Button extends Component
                 'price' => $this->product->price,
                 'quantity' => $this->quantity, // input quantity
                 'stock_quantity' => $this->product->stock_quantity,
-                'image' => $this->product->images->first() ? asset('img/products/' . $this->product->slug . '/' . $this->product->images->first()->filename) : asset('img/common/img-unavailable.jpg'),
+                'image' => $this->product->images->first() ? Storage::url($this->product->images->first()->image_path) : asset('img/common/img-unavailable.jpg'),
             ];
         }
 

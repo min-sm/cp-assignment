@@ -8,7 +8,7 @@
             <div class="container mx-auto px-4 py-8">
                 <div class="flex flex-wrap -mx-4">
                     <!-- Product Images -->
-                    <div class="w-full md:w-1/2 px-4 mb-8" x-data="{ mainImage: '{{ $product->images->first() ? asset('img/products/' . $product->slug . '/' . $product->images->first()->filename) : asset('img/common/img-unavailable.jpg') }}' }">
+                    <div class="w-full md:w-1/2 px-4 mb-8" x-data="{ mainImage: '{{ $product->images->first() ? Storage::url($product->images->first()->image_path) : asset('img/common/img-unavailable.jpg') }}' }">
                         <!-- Main Image -->
                         <div class="w-full h-64 sm:h-80 md:h-96 lg:h-112 xl:h-128 relative">
                             <img :src="mainImage" alt="Product"
@@ -18,10 +18,9 @@
                         <!-- Thumbnails -->
                         <div class="flex gap-4 py-4 justify-center overflow-x-auto">
                             @foreach ($product->images as $image)
-                                <img src="{{ asset('img/products/' . $product->slug . '/' . $image->filename) }}"
-                                    alt="Thumbnail"
+                                <img src="{{ Storage::url($image->image_path) }}" alt="Thumbnail"
                                     class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                                    @click="mainImage = '{{ asset('img/products/' . $product->slug . '/' . $image->filename) }}'">
+                                    @click="mainImage = '{{ Storage::url($image->image_path) }}'">
                             @endforeach
                         </div>
                     </div>
