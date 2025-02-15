@@ -222,7 +222,6 @@
         </div>
     </div>
     @livewireScripts
-    {{-- <script src="{{ asset('js/init-alpine.js') }}"></script> --}}
 </body>
 
 </html>
