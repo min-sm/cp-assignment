@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ $title ?? 'Admin Panel' }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('img/common/logo.png') }}" />
     {{-- Load TailwindCSS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -21,7 +22,7 @@
                 <ul class="mt-6">
                     <li class="relative px-6 py-3">
                         @if (request()->routeIs('admin.dashboard'))
-                            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            <span class="absolute inset-y-0 left-0 w-1 bg-royal-blue rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
                         <a href="{{ route('admin.dashboard') }}"
@@ -36,7 +37,7 @@
                     </li>
                     <li class="relative px-6 py-3">
                         @if (request()->routeIs('admin.products'))
-                            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            <span class="absolute inset-y-0 left-0 w-1 bg-royal-blue rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
                         <a href="{{ route('admin.products') }}"
