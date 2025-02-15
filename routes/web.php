@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
+use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Products;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -49,8 +50,7 @@ Route::fallback(function () {
 
 Route::prefix('admin')->group(function () {
 // Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::resource('orders', OrderController::class);
-    Route::get('/', fn() => view("admin.dashboard"))->name('admin.dashboard');
+    Route::get('/', Dashboard::class)->name('admin.dashboard');
     Route::get('/products', Products::class)->name('admin.products');
 });
 

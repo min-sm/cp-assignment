@@ -1,7 +1,8 @@
-import './bootstrap';
-import 'flowbite';
-import Alpine from 'alpinejs'
+import "./bootstrap";
+import "flowbite";
+import Alpine from "alpinejs";
+import initAlpine from "./init-alpine";
 
-Alpine.start()
-
-window.Alpine = Alpine
+initAlpine(); // Initialize the Alpine data function
+Alpine.start();
+window.Alpine = Alpine;
