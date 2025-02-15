@@ -1,27 +1,17 @@
 export default function initAlpine() {
-    window.data = function() {
-        function getThemeFromLocalStorage() {
-            // if user already changed the theme, use it
-            if (window.localStorage.getItem("dark")) {
-                return JSON.parse(window.localStorage.getItem("dark"));
-            }
-
-            // else return their preferences
-            return (
-                !!window.matchMedia &&
-                window.matchMedia("(prefers-color-scheme: dark)").matches
-            );
-        }
-
-        function setThemeToLocalStorage(value) {
-            window.localStorage.setItem("dark", value);
-        }
-
+    window.data = function () {
         return {
-            dark: getThemeFromLocalStorage(),
+            dark: localStorage.getItem('dark') === 'true',
             toggleTheme() {
                 this.dark = !this.dark;
-                setThemeToLocalStorage(this.dark);
+                localStorage.setItem('dark', this.dark);
+
+                // Toggle the 'dark' class on the html element
+                if (this.dark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
             },
             isSideMenuOpen: false,
             toggleSideMenu() {
