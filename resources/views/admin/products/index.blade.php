@@ -4,16 +4,57 @@
     </h2>
     <div class="flex justify-end space-x-4 mb-4">
         <button wire:click="setViewMode('table')"
-            class="px-4 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 
+            class="px-2 py-2 rounded-md bg-blue-600 hover:bg-blue-800 
                 {{ $viewMode === 'table' ? 'opacity-100' : 'opacity-50' }}">
-            Table View
+            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="1.5"
+                    d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
+            </svg>
         </button>
 
         <button wire:click="setViewMode('card')"
-            class="px-4 py-2 rounded-md text-white bg-green-600 hover:bg-green-700
+            class="px-2 py-2 rounded-md bg-green-600 hover:bg-green-800
                 {{ $viewMode === 'card' ? 'opacity-100' : 'opacity-50' }}">
-            Card View
+            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M4.857 3A1.857 1.857 0 0 0 3 4.857v4.286C3 10.169 3.831 11 4.857 11h4.286A1.857 1.857 0 0 0 11 9.143V4.857A1.857 1.857 0 0 0 9.143 3H4.857Zm10 0A1.857 1.857 0 0 0 13 4.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 21 9.143V4.857A1.857 1.857 0 0 0 19.143 3h-4.286Zm-10 10A1.857 1.857 0 0 0 3 14.857v4.286C3 20.169 3.831 21 4.857 21h4.286A1.857 1.857 0 0 0 11 19.143v-4.286A1.857 1.857 0 0 0 9.143 13H4.857Zm10 0A1.857 1.857 0 0 0 13 14.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 21 19.143v-4.286A1.857 1.857 0 0 0 19.143 13h-4.286Z"
+                    clip-rule="evenodd" />
+            </svg>
         </button>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <input type="text" wire:model.live.debounce.500ms="search" placeholder="Search products..."
+            class="p-2 border rounded-md">
+
+        <select wire:model.live="selectedCategory" class="p-2 border rounded-md">
+            <option value="">All Categories</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+
+        <select wire:model.live="selectedBrand" class="p-2 border rounded-md">
+            <option value="">All Brands</option>
+            @foreach ($brands as $brand)
+                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+            @endforeach
+        </select>
+
+        <div class="flex gap-2">
+            <select wire:model.live="sortField" class="p-2 border rounded-md flex-1">
+                <option value="name">Name</option>
+                <option value="price">Price</option>
+                <option value="created_at">Date Added</option>
+            </select>
+            <select wire:model.live="sortDirection" class="p-2 border rounded-md">
+                <option value="asc">↑</option>
+                <option value="desc">↓</option>
+            </select>
+        </div>
     </div>
 
     @if ($viewMode === 'table')
