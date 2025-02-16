@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -47,10 +48,13 @@ class ProductsIndex extends Component
     #[Layout('admin.layouts.default')]
     public function render()
     {
+        $categories = Cache::remember('categories', 3600, fn() => Category::all());
+        $brands = Cache::remember('brands', 3600, fn() => Brand::all());
+
         return view('admin.products.index', [
             'products' => $this->products,
-            'categories' => Category::all(),
-            'brands' => Brand::all(),
+            'categories' => $categories,
+            'brands' => $brands,
         ]);
     }
 
