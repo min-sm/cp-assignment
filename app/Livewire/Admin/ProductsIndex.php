@@ -14,6 +14,8 @@ class ProductsIndex extends Component
 {
     use WithPagination;
 
+    public $viewMode = 'table'; // Default to table view
+
     #[Layout('admin.layouts.default')]
     public function render()
     {
@@ -23,5 +25,10 @@ class ProductsIndex extends Component
 
         Debugbar::info($products);
         return view('admin.products.index', compact('products', 'categories', 'brands'));
+    }
+
+    public function setViewMode($mode)
+    {
+        $this->viewMode = $mode;
     }
 }
