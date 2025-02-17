@@ -6,7 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
 use App\Livewire\Admin\Dashboard;
-use App\Livewire\Admin\ProductsIndex;
+use App\Livewire\Admin\Products\Index;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -51,7 +51,7 @@ Route::fallback(function () {
 Route::prefix('admin')->group(function () {
 // Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
-    Route::get('/products', ProductsIndex::class)->name('admin.products');
+    Route::get('/products', Index::class)->name('admin.products');
 });
 
 Route::get('/test', function () {

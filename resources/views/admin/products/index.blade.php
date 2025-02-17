@@ -2,27 +2,10 @@
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Products
     </h2>
-    <div class="flex justify-end space-x-4 mb-4">
-        <button wire:click="setViewMode('table')"
-            class="px-2 py-2 rounded-md bg-blue-600 hover:bg-blue-800
-                {{ $viewMode === 'table' ? 'opacity-100' : 'opacity-50' }}">
-            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-width="1.5"
-                    d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
-            </svg>
-        </button>
-
-        <button wire:click="setViewMode('card')"
-            class="px-2 py-2 rounded-md bg-green-600 hover:bg-green-800
-                {{ $viewMode === 'card' ? 'opacity-100' : 'opacity-50' }}">
-            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path fill-rule="evenodd"
-                    d="M4.857 3A1.857 1.857 0 0 0 3 4.857v4.286C3 10.169 3.831 11 4.857 11h4.286A1.857 1.857 0 0 0 11 9.143V4.857A1.857 1.857 0 0 0 9.143 3H4.857Zm10 0A1.857 1.857 0 0 0 13 4.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 21 9.143V4.857A1.857 1.857 0 0 0 19.143 3h-4.286Zm-10 10A1.857 1.857 0 0 0 3 14.857v4.286C3 20.169 3.831 21 4.857 21h4.286A1.857 1.857 0 0 0 11 19.143v-4.286A1.857 1.857 0 0 0 9.143 13H4.857Zm10 0A1.857 1.857 0 0 0 13 14.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 21 19.143v-4.286A1.857 1.857 0 0 0 19.143 13h-4.286Z"
-                    clip-rule="evenodd" />
-            </svg>
-        </button>
+    <div class="flex justify-end items-end space-x-4 mb-4">
+        <a href=""
+            class="text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm tracking-wide px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add
+            new product</a>
     </div>
 
     <!-- Search and Filters -->
@@ -55,6 +38,29 @@
                 <option value="desc">↓</option>
             </select>
         </div>
+    </div>
+
+    <div class="flex justify-end items-end space-x-4 my-4">
+        <button wire:click="setViewMode('table')"
+            class="px-2 py-2 rounded-md bg-blue-600 hover:bg-blue-800
+                {{ $viewMode === 'table' ? 'opacity-100' : 'opacity-50' }}">
+            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="1.5"
+                    d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
+            </svg>
+        </button>
+
+        <button wire:click="setViewMode('card')"
+            class="px-2 py-2 rounded-md bg-green-600 hover:bg-green-800
+                {{ $viewMode === 'card' ? 'opacity-100' : 'opacity-50' }}">
+            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M4.857 3A1.857 1.857 0 0 0 3 4.857v4.286C3 10.169 3.831 11 4.857 11h4.286A1.857 1.857 0 0 0 11 9.143V4.857A1.857 1.857 0 0 0 9.143 3H4.857Zm10 0A1.857 1.857 0 0 0 13 4.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 21 9.143V4.857A1.857 1.857 0 0 0 19.143 3h-4.286Zm-10 10A1.857 1.857 0 0 0 3 14.857v4.286C3 20.169 3.831 21 4.857 21h4.286A1.857 1.857 0 0 0 11 19.143v-4.286A1.857 1.857 0 0 0 9.143 13H4.857Zm10 0A1.857 1.857 0 0 0 13 14.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 21 19.143v-4.286A1.857 1.857 0 0 0 19.143 13h-4.286Z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
     </div>
 
     @if ($viewMode === 'table')

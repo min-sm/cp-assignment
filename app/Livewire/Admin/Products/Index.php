@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Products;
 
 use App\Models\Brand;
 use App\Models\Category;
@@ -12,7 +12,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ProductsIndex extends Component
+class Index extends Component
 {
     use WithPagination;
 
