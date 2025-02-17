@@ -3,7 +3,7 @@
         Products
     </h2>
     <div class="flex justify-end items-end space-x-4 mb-4">
-        <a href=""
+        <a href="{{ route('admin.products.create') }}"
             class="text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm tracking-wide px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add
             new product</a>
     </div>
@@ -169,7 +169,7 @@
         {{ $products->links('vendor.livewire.flowbite') }}
     </div>
 
-    <div wire:loading.delay.longer wire:target.except="gotoPage, nextPage, previousPage"
+    <div wire:loading.delay.longest wire:target.except="gotoPage, nextPage, previousPage"
         class="z-20 fixed top-0 inset-x-0 h-full bg-slate-500/50">
         <div role="status" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <svg aria-hidden="true" class="w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

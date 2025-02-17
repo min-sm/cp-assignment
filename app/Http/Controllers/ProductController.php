@@ -71,4 +71,23 @@ class ProductController extends Controller
     {
         return view('pages.products.index', ['request' => $request->all()]);
     }
+
+    public function store(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'stock_quantity' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'series_id' => 'required|exists:series,id',
+        ]);
+
+        // Create a new product
+        Product::create($request->all());
+
+        // Redirect to the products index page
+        return redirect()->route('admin.products');
+    }
 }

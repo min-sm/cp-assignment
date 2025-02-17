@@ -9,6 +9,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -45,6 +46,7 @@ class Index extends Component
         $this->resetPage();
     }
 
+    #[Title('All products')]
     #[Layout('admin.layouts.default')]
     public function render()
     {
