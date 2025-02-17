@@ -1,6 +1,6 @@
 @props(['name', 'label', 'type' => 'text', 'placeholder' => '', 'required' => false])
 
-<div class="mb-5">
+<div {{ $attributes }}>
     <label for="{{ $name }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         {{ $label }}
     </label>

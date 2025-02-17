@@ -20,9 +20,9 @@
         <form class="max-w-sm mx-auto" action="/login" method="POST">
             @csrf
 
-            <x-form.input name="email" type="email" label="Your email" placeholder="john@doe.com" :required="true" />
+            <x-form.input name="email" type="email" label="Your email" placeholder="john@doe.com" :required="true" class="mb-5" />
 
-            <x-form.password name="password" label="Your password" />
+            <x-form.password name="password" label="Your password" class="mb-5" />
 
             <div class="flex items-center justify-center my-4">
                 <div class="h-px bg-gray-300 flex-grow"></div>
