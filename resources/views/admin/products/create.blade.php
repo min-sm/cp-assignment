@@ -5,38 +5,57 @@
             <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                    <div class="sm:col-span-2">
-                        <label for="model" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
-                            model</label>
-                        <input type="text" name="model" id="model"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-primary-500"
-                            placeholder="Type product model" required>
-                        </div>
-                        <x-form.input name="model" type="model" label="Product model" placeholder="Type product model" :required="true" />
+                    <x-form.input name="model" label="Product model" placeholder="Type product model" :required="true"
+                        class="sm:col-span-2" />
                     <div class="w-full">
                         <label for="brand"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
-                        <input type="text" name="brand" id="brand"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Product brand" required>
+                        <select id="brand" wire:model="selectedBrand"
+                            @change="if ($event.target.selectedIndex === $event.target.options.length - 1) { window.open('{{ route('test') }}'); $event.target.selectedIndex = 0; }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option value="">Select brand</option>
+                            @foreach ($brands as $brand)
+                                <option value="{{ $brand->id }}" {{ old('brand') == $brand->id ? 'selected' : '' }}>
+                                    {{ ucfirst($brand->name) }}
+                                </option>
+                            @endforeach
+                            <option
+                                class="text-white text-center py-12 inline-block bg-blue-700 font-medium tracking-wide">
+                                Create new brand
+                            </option>
+                        </select>
                     </div>
+
                     <div class="w-full">
-                        <label for="price"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                        <input type="number" name="price" id="price"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="$2999" required>
+                        <label for="series"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series</label>
+                        <select id="series" name="series" @disabled(!$selectedBrand)
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <option value="">Select series</option>
+                            @foreach ($filteredSeries as $series)
+                                <option value="{{ $series->id }}" {{ old('series') == $series->id ? 'selected' : '' }}>
+                                    {{ ucfirst($series->name) }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label for="category"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                        <select id="category"
+                        <select id="category" name="category" wire:poll.30s.visible
+                            @change="if ($event.target.selectedIndex === $event.target.options.length - 1) { window.open('{{ route('test') }}', '_blank'); $event.target.selectedIndex = 0; }"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option selected="">Select category</option>
-                            <option value="TV">TV/Monitors</option>
-                            <option value="PC">PC</option>
-                            <option value="GA">Gaming/Console</option>
-                            <option value="PH">Phones</option>
+                            <option value="" {{ old('category') == '' ? 'selected' : '' }}>Select category
+                            </option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ old('category') == $category->id ? 'selected' : '' }}>
+                                    {{ ucfirst($category->name) }}
+                                </option>
+                            @endforeach
+                            <option
+                                class="text-white text-center py-12 inline-block bg-blue-700 font-medium tracking-wide">
+                                Create new category</option>
                         </select>
                     </div>
                     <div>

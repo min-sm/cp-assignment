@@ -3,9 +3,7 @@
         Products
     </h2>
     <div class="flex justify-end items-end space-x-4 mb-4">
-        <a href="{{ route('admin.products.create') }}"
-            class="text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm tracking-wide px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add
-            new product</a>
+        <x-button link="{{ route('admin.products.create') }}" label="Add new product" />
     </div>
 
     <!-- Search and Filters -->
