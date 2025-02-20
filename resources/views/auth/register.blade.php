@@ -13,9 +13,9 @@
         <form class="max-w-sm mx-auto" action="/register" method="POST">
             @csrf
 
-            <x-form.input name="name" label="Your name" placeholder="John Doe" :required="true" />
+            <x-form.input name="name" label="Your name" placeholder="John Doe" :required="true" class="mb-5" />
 
-            <x-form.input name="email" type="email" label="Your email" placeholder="john@doe.com" :required="true" />
+            <x-form.input name="email" type="email" label="Your email" placeholder="john@doe.com" :required="true" class="mb-5" />
 
             <x-form.password name="password" label="Your password" />
 
