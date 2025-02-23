@@ -9,11 +9,13 @@
                     <x-form.input name="model" label="Product model" placeholder="Type product model" :required="true"
                         class="sm:col-span-2" />
                     <div class="w-full">
-                        <label for="brand"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
-                        <select id="brand" name="brand" wire:model.live="selectedBrand"
+                        <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Brand
+                        </label>
+                        <select id="brand" name="brand" wire:poll.30s.visible wire:model.change="selectedBrand"
                             @change="if ($event.target.selectedIndex === $event.target.options.length - 1) { window.open('{{ route('test') }}'); $event.target.selectedIndex = 0; }; selectedBrandName = $event.target.options[$event.target.selectedIndex].text;"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            class="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 {{ $errors->has('brand') ? 'border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50 dark:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 text-red-900 dark:text-red-50' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-gray-900 dark:text-white' }}"
+                            required>
                             <option>Select brand</option>
                             @foreach ($brands as $brand)
                                 <option value="{{ $brand->id }}" {{ old('brand') == $brand->id ? 'selected' : '' }}>
@@ -21,17 +23,20 @@
                                 </option>
                             @endforeach
                             <option
-                                class="text-white text-center py-12 inline-block bg-blue-700 font-medium tracking-wide">
+                                class="text-white text-center bg-blue-700 tracking-wide cursor-pointer hover:bg-black">
                                 Create new brand
                             </option>
                         </select>
+                        @error('brand')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="w-full">
                         <label for="series"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series</label>
-                        <select id="series" name="series" @disabled($selectedBrand === null)
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <option>Select series</option>
+                        <select id="series" name="series" wire:poll.30s.visible @disabled($selectedBrand === null)
+                            class="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 {{ $errors->has('series') ? 'border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50 dark:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 text-red-900 dark:text-red-50' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-gray-900 dark:text-white' }}">
+                            <option value="">Select series</option>
                             @foreach ($filteredSeries as $series)
                                 <option value="{{ $series->id }}"
                                     {{ old('series') == $series->id ? 'selected' : '' }}>
@@ -39,19 +44,22 @@
                                 </option>
                             @endforeach
                             @if ($selectedBrand)
-                                <option
-                                    class="text-white text-center py-12 inline-block bg-blue-700 font-medium tracking-wide"
+                                <option value=""
+                                    class="text-white text-center bg-blue-700 tracking-wide cursor-pointer"
                                     x-text="'Add new series to ' + selectedBrandName"></option>
                             @endif
                         </select>
+                        @error('series')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="sm:col-span-2">
                         <label for="category"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                         <select id="category" name="category" wire:poll.30s.visible
                             @change="if ($event.target.selectedIndex === $event.target.options.length - 1) { window.open('{{ route('test') }}', '_blank'); $event.target.selectedIndex = 0; }"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option value="" {{ old('category') == '' ? 'selected' : '' }}>Select category
+                            class="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 {{ $errors->has('category') ? 'border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50 dark:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 text-red-900 dark:text-red-50' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-gray-900 dark:text-white' }}">
+                            <option value="">Select category
                             </option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
@@ -59,10 +67,12 @@
                                     {{ ucfirst($category->name) }}
                                 </option>
                             @endforeach
-                            <option
-                                class="text-white text-center py-12 inline-block bg-blue-700 font-medium tracking-wide">
+                            <option class="text-white text-center bg-blue-700 tracking-wide">
                                 Create new category</option>
                         </select>
+                        @error('category')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
                     <x-form.input name="quantity" label="Quantity" placeholder="Enter quantity" :required="true"
                         type="number" :inputAttributes="['min' => 1]" />
@@ -73,8 +83,13 @@
                         <label for="description"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                         <textarea id="description" rows="8" name="description"
-                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Product description here"></textarea>
+                            class="block p-2.5 w-full text-sm rounded-lg border focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:focus:ring-blue-500 dark:focus:border-blue-500 {{ $errors->has('description')
+                                ? 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                                : 'bg-gray-50 border-gray-300 text-gray-900 dark:text-white dark:placeholder-gray-400 dark:border-gray-600' }}"
+                            placeholder="Product description here">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="sm:col-span-2">
@@ -87,7 +102,7 @@
 
                 </div>
                 <button type="submit"
-                    class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                    class="text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm tracking-wide px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-6">
                     Add product
                 </button>
             </form>

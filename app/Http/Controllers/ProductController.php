@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -76,12 +77,21 @@ class ProductController extends Controller
     {
         // Validate the request
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
+            'model' => 'required',
+            'brand' => 'required|exists:brands,id',
+            'series' => [
+                Rule::exists('series', 'id')->where(function ($query) use ($request) {
+                    return $query->where('brand_id', $request->brand);
+                }),
+            ],
+            'category' => 'required|exists:categories,id',
+            'description' => 'nullable',
             'price' => 'required|numeric',
             'stock_quantity' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
             'series_id' => 'required|exists:series,id',
+        ], [
+            'series.exists' => 'The selected series does not belong to the chosen brand.',
         ]);
 
         // Create a new product
