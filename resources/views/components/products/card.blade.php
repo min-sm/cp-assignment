@@ -25,17 +25,20 @@
                     </button>
                 </form>
             </h6>
-            <h6>
-                <form action="{{ route('products.filter') }}" method="POST" class="inline">
-                    @csrf
-                    <input type="hidden" name="filter_type" value="brand">
-                    <input type="hidden" name="brand_id" value="{{ $product->series->brand->id }}">
-                    <button type="submit"
-                        class="hover:text-blue-600 dark:hover:text-blue-400 text-gray-900 dark:text-white">
-                        {{ explode(' ', $product->series->brand->name)[0] }}
-                    </button>
-                </form>
-            </h6>
+            @isset($product->series->brand)
+                <h6>
+                    <form action="{{ route('products.filter') }}" method="POST" class="inline">
+                        @csrf
+                        <input type="hidden" name="filter_type" value="brand">
+                        <input type="hidden" name="brand_id" value="{{ $product->series->brand->id }}">
+                        <button type="submit"
+                            class="hover:text-blue-600 dark:hover:text-blue-400 text-gray-900 dark:text-white">
+                            {{ explode(' ', $product->series->brand->name)[0] }}
+                        </button>
+                    </form>
+                </h6>
+            @endisset
+
         </div>
         <p class="mb-3 mt-2 font-normal text-gray-700 dark:text-gray-400 flex-grow">
             {{ Str::words($product->description, 15, '...') }}

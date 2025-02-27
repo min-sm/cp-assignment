@@ -58,7 +58,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                         <select id="category" name="category" wire:poll.30s.visible
                             @change="if ($event.target.selectedIndex === $event.target.options.length - 1) { window.open('{{ route('test') }}', '_blank'); $event.target.selectedIndex = 0; }"
-                            class="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 {{ $errors->has('category') ? 'border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50 dark:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 text-red-900 dark:text-red-50' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-gray-900 dark:text-white' }}">
+                            class="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 {{ $errors->has('category') ? 'border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50 dark:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 text-red-900 dark:text-red-50' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-gray-900 dark:text-white' }}" required>
                             <option value="">Select category
                             </option>
                             @foreach ($categories as $category)
@@ -94,10 +94,10 @@
 
                     <div class="sm:col-span-2">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            for="multiple_files">Upload multiple files</label>
+                            for="files">Upload multiple files</label>
                         <input
                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            id="multiple_files" type="file" multiple>
+                            id="files" type="file" name="files[]" multiple>
                     </div>
 
                 </div>
