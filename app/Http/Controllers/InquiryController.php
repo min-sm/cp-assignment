@@ -26,8 +26,8 @@ class InquiryController extends Controller
             'email' => 'required|email',
             'subject' => 'nullable|string|max:255',
             'message' => 'required|string',
-            'files' => 'max:3',
-            'files.*' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'files' => 'nullable|max:3',
+            'files.*' => 'file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $inquiry = Inquiry::create([
