@@ -27,7 +27,7 @@ class ProductController extends Controller
         // First, try to get products with the same category and brand
         $sameCategoryAndBrand = Product::where('category_id', $product->category_id)
             ->whereHas('series', function ($query) use ($product) {
-                $query->where('brand_id', $product->series->brand_id);
+                $query->where('brand_id', $product->brand_id);
             })
             ->where('id', '!=', $product->id) // Exclude the current product
             ->where('stock_quantity', '>', '0')
@@ -50,7 +50,7 @@ class ProductController extends Controller
         // If we still need more products, get products with the same brand
         if ($products->count() < 4) {
             $sameBrand = Product::whereHas('series', function ($query) use ($product) {
-                $query->where('brand_id', $product->series->brand_id);
+                $query->where('brand_id', $product->brand_id);
             })
                 ->where('id', '!=', $product->id) // Exclude the current product
                 ->whereNotIn('id', $products->pluck('id')) // Exclude already fetched products
