@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('inquiries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign key to users table
+            $table->string('email'); // Email address
+            $table->string('subject')->nullable(); // Subject (nullable)
+            $table->text('message'); // Message
             $table->timestamps();
         });
     }

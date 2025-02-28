@@ -19,7 +19,7 @@
             {{-- @include('includes.header') --}}
             @livewire('layout.header')
         </header>
-        <main class="flex-grow @yield('mainClass')">
+        <main class="flex-grow @yield('mainClass') dark:bg-[#0f1515]">
             @yield('content')
         </main>
         <footer class="bg-white shadow dark:bg-gray-900">

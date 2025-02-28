@@ -9,26 +9,30 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Step 1: Get the most sold items
+        // Fetch top 4 most sold product IDs
         $mostSoldItems = DB::table('order_items')
             ->select('product_id', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('product_id')
             ->orderByDesc('total_quantity')
             ->take(4)
-            ->pluck('product_id');
+            ->pluck('product_id')
+            ->toArray();
 
-        // Step 2: Check stock availability and get the products
-        $products = Product::whereIn('id', $mostSoldItems)
-            ->where('stock_quantity', '>', 0)
-            ->orderByRaw("FIELD(id, " . implode(',', $mostSoldItems->toArray()) . ")")
-            ->get();
+        // Fetch products in stock from most sold items
+        $products = collect();
 
-        // Step 3: If less than 4 products, fill the rest with products having the highest stock quantities
+        if (!empty($mostSoldItems)) {
+            $products = Product::whereIn('id', $mostSoldItems)
+                ->where('stock_quantity', '>', 0)
+                ->orderByRaw("FIELD(id, " . implode(',', $mostSoldItems) . ")")
+                ->get();
+        }
+
+        // If less than 4 products, fill remaining slots with highest stock products
         if ($products->count() < 4) {
-            $remainingCount = 4 - $products->count();
-            $additionalProducts = Product::whereNotIn('id', $products->pluck('id'))
+            $additionalProducts = Product::whereNotIn('id', $products->pluck('id')->toArray())
                 ->orderByDesc('stock_quantity')
-                ->take($remainingCount)
+                ->take(4 - $products->count())
                 ->get();
 
             $products = $products->merge($additionalProducts);

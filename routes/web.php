@@ -5,6 +5,9 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
+use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Products\Create;
+use App\Livewire\Admin\Products\Index;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -31,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
     Route::post('/checkout/process', [OrderController::class, 'process'])->name('checkout.process');
     Route::get('/history', [OrderController::class, 'history'])->name('history');
+    Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.submit');
 });
 
 Route::get('/cart', fn() => view('pages.cart'))->name('cart');
@@ -45,11 +49,15 @@ Route::fallback(function () {
 
 Route::prefix('admin')->group(function () {
 // Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::resource('products', ProductController::class);
-    Route::resource('orders', OrderController::class);
-    Route::get('/', fn() => view("admin.dashboard"))->name('admin.dashboard');
+    Route::get('/', Dashboard::class)->name('admin.dashboard');
+    Route::get('/products', Index::class)->name('admin.products');
+    Route::get('/products/create', Create::class)->name('admin.products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
+    // Route::get('/products/{product}/edit', [Index::class, 'edit'])->name('admin.products.edit');
+    // Route::put('/products/{product}', [Index::class,'update'])->name('admin.products.update');
+    // Route::delete('/products/{product}', [Index::class, 'destroy'])->name('admin.products.destroy');
 });
 
 Route::get('/test', function () {
     return view('pages.test');
-});
+})->name('test');

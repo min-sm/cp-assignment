@@ -9,16 +9,13 @@
                 <a href="{{ route('home') }}" class="hover:underline me-4 md:me-6">Home</a>
             </li>
             <li>
-                <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                <a href="{{ route('about') }}" class="hover:underline me-4 md:me-6">About</a>
             </li>
             <li>
                 <a href="{{ route('products') }}" class="hover:underline me-4 md:me-6">Products</a>
             </li>
             <li>
-                <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-            </li>
-            <li>
-                <a href="#" class="hover:underline">Contact</a>
+                <a href="{{ route('inquiry') }}" class="hover:underline">Contact</a>
             </li>
         </ul>
     </div>

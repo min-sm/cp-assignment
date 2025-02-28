@@ -1,7 +1,10 @@
-import './bootstrap';
-import 'flowbite';
-import Alpine from 'alpinejs'
+import "./bootstrap";
+import "flowbite";
+import initAlpine from "./init-alpine";
 
-Alpine.start()
+initAlpine(); // Initialize the Alpine data function
 
-window.Alpine = Alpine
+if (localStorage.getItem('dark') === 'true' ||
+    (!localStorage.getItem('dark') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark');
+}

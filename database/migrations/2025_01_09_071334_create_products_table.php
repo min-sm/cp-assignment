@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('model');
             $table->string('slug')->unique();
             $table->foreignId('series_id')->nullable()->constrained('series')->onDelete('set null'); // Allow NULL
+            $table->foreignId('brand_id')->constrained('brands'); // Not nullable
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2)->check('price >= 0');

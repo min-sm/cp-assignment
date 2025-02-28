@@ -3,13 +3,11 @@
 @section('title', 'Products')
 
 @section('content')
-    <div class="max-w-screen-xl mx-auto p-4">
+    <div class="max-w-screen-xl mx-auto p-4 mb-2">
         <p class="text-3xl font-semibold text-gray-900 dark:text-white">Order History</p>
 
         @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
-                {{ session('success') }}
-            </div>
+            <x-alert type="success" message="{{ session('success') }}" />
         @endif
 
         <div class="overflow-x-auto mt-4">
@@ -68,7 +66,7 @@
                                     </td>
                                 @endif
                                 <td class="border-b relative h-24">
-                                    <img src="{{ $item->product->images->first() ? asset('img/products/' . $item->product->slug . '/' . $item->product->images->first()->filename) : asset('img/common/img-unavailable.jpg') }}"
+                                    <img src="{{ $item->product->images->first() ? Storage::url($item->product->images->first()->image_path) : asset('img/common/img-unavailable.jpg') }}"
                                         alt="{{ $item->product->model }}"
                                         class="absolute top-0 left-0 w-full h-full object-cover">
                                 </td>

@@ -2,6 +2,7 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: 'class',
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
@@ -16,10 +17,15 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                'ivory': '#E9EED9',
                 'honeydew': '#CBD2A4',
                 'mocha': '#9A7E6F',
                 'charcoal': '#54473F',
+                'ivory': '#ECEBE6',
+                'baby-blue': '#BFD7ED',
+                'blue-grotto': '#43B0F1',
+                'royal-blue': '#0074B7',
+                'navy-blue': '#003B73',
+
             },
         },
     },

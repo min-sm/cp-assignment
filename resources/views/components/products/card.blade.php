@@ -4,7 +4,7 @@
     class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
     <a href="{{ route('product.show', ['slug' => $product->slug]) }}">
         <img class="w-full h-48 object-cover p-8 rounded-t-lg"
-            src="{{ $product->images->first() ? asset('img/products/' . $product->slug . '/' . $product->images->first()->filename) : asset('img/common/img-unavailable.jpg') }}"
+            src="{{ $product->images->first() ? Storage::url($product->images->first()->image_path) : asset('img/common/img-unavailable.jpg') }}"
             alt="{{ $product->model }} image" />
     </a>
     <div class="px-5 pb-5 flex flex-col flex-grow">
@@ -30,10 +30,10 @@
                 'filter-link',
                 [
                     'type' => 'brand',
-                    'id' => $product->series->brand->id,
-                    'label' => explode(' ', $product->series->brand->name)[0],
+                    'id' => $product->brand->id,
+                    'label' => explode(' ', $product->brand->name)[0],
                 ],
-                key('brand-' . $product->series->brand->id)
+                key('brand-' . $product->brand->id)
             )
 
             <!-- Category Link -->
@@ -45,7 +45,7 @@
             <!-- Brand Link -->
             <a href="{{ route('products') }}" class="pointer hover:text-blue-600 block"
                 wire:click.prevent="setBrandSession({{ $product->series->brand->id }})">
-                {{ explode(' ', $product->series->brand->name)[0] }}
+                {{ explode(' ', $product->brand->name)[0] }}
             </a>
         </div>
         <p class="mb-3 mt-2 font-normal text-gray-700 dark:text-gray-400 flex-grow">

@@ -10,12 +10,19 @@
         <p class="text-lg font-semibold text-center text-gray-700 dark:text-gray-300 mb-8">
             Log in
         </p>
+        @if (session('success'))
+            <x-alert type="success" message="{{ session('success') }}" />
+        @endif
+
+        @if (session('error'))
+            <x-alert type="error" message="{{ session('error') }}" />
+        @endif
         <form class="max-w-sm mx-auto" action="/login" method="POST">
             @csrf
 
-            <x-form.input name="email" type="email" label="Your email" placeholder="john@doe.com" :required="true" />
+            <x-form.input name="email" type="email" label="Your email" placeholder="john@doe.com" :required="true" class="mb-5" />
 
-            <x-form.password name="password" label="Your password" />
+            <x-form.password name="password" label="Your password" class="mb-5" />
 
             <div class="flex items-center justify-center my-4">
                 <div class="h-px bg-gray-300 flex-grow"></div>
@@ -39,10 +46,16 @@
             </button>
         </form>
 
-        <p class="text-sm text-center text-gray-600 dark:text-gray-400 mt-4">
-            Don't have an account? <a href="{{ route('register') }}"
-                class="text-blue-600 hover:underline dark:text-blue-400">Register</a>
-        </p>
+        <div class="text-sm text-center text-gray-600 dark:text-gray-400 mt-4 ">
+            <p class="mb-2">
+                Don't have an account? <a href="{{ route('register') }}"
+                    class="text-blue-600 hover:underline dark:text-blue-400">Register</a>
+            </p>
+            <a href="{{ route('home') }}" class="hover:underline hover:text-blue-600 dark:hover:text-blue-400">Continue
+                as guest</a>
+        </div>
+
     </div>
+
 
 @endsection
