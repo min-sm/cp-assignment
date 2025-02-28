@@ -54,11 +54,7 @@ class Product extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function ($model) {
-                if (!$model->series) {
-                    return $model->model;
-                }
-
-                return $model->series->brand->name . ' ' . $model->model;
+                return $model->brand->name . ' ' . $model->model;
             })
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate(false);
