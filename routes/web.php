@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Products\Create;
 use App\Livewire\Admin\Products\Index;
+use App\Livewire\Admin\Products\Show;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -49,14 +51,12 @@ Route::fallback(function () {
 });
 
 Route::prefix('admin')->group(function () {
-// Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    // Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
     Route::get('/products', Index::class)->name('admin.products');
     Route::get('/products/create', Create::class)->name('admin.products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
-    // Route::get('/products/{product}/edit', [Index::class, 'edit'])->name('admin.products.edit');
-    // Route::put('/products/{product}', [Index::class,'update'])->name('admin.products.update');
-    // Route::delete('/products/{product}', [Index::class, 'destroy'])->name('admin.products.destroy');
+    Route::get('/product/{slug}', Show::class)->name('admin.products.show');
 });
 
 Route::get('/test', function () {
