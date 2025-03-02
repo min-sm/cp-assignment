@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/cart', fn() => view('pages.cart'))->name('cart');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
-Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/products', [ProductController::class, 'filter'])->name('products.filter');
 Route::get('/about-us', fn() => view('pages.about'))->name('about');
 
@@ -53,10 +53,11 @@ Route::fallback(function () {
 Route::prefix('admin')->group(function () {
     // Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
-    Route::get('/products', Index::class)->name('admin.products');
+    Route::get('/products', Index::class)->name('admin.products.index');
     Route::get('/products/create', Create::class)->name('admin.products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
-    Route::get('/product/{slug}', Show::class)->name('admin.products.show');
+    Route::get('/products/{slug}', Show::class)->name('admin.products.show');
+    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.delete');
 });
 
 Route::get('/test', function () {

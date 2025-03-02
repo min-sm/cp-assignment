@@ -36,12 +36,12 @@
                         </a>
                     </li>
                     <li class="relative px-6 py-3">
-                        @if (request()->routeIs('admin.products'))
-                            <span class="absolute inset-y-0 left-0 w-1 bg-royal-blue rounded-tr-lg rounded-br-lg"
+                        @if (request()->routeIs('admin.products.index'))
+                            <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg bg-royal-blue"
                                 aria-hidden="true"></span>
                         @endif
-                        <a href="{{ route('admin.products') }}"
-                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.products') ? 'text-gray-800 dark:text-gray-100' : '' }}">
+                        <a href="{{ route('admin.products.index') }}"
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.products.index') ? 'text-gray-800 dark:text-gray-100' : '' }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16" />
@@ -89,12 +89,12 @@
                         </a>
                     </li>
                     <li class="relative px-6 py-3">
-                        @if (request()->routeIs('admin.products'))
+                        @if (request()->routeIs('admin.products.index'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
-                        <a href="{{ route('admin.products') }}"
-                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.products') ? 'text-gray-800 dark:text-gray-100' : '' }}">
+                        <a href="{{ route('admin.products.index') }}"
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.products.index') ? 'text-gray-800 dark:text-gray-100' : '' }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -122,9 +122,9 @@
                                 clip-rule="evenodd"></path>
                         </svg>
                     </button>
-                    <div class="flex justify-center flex-1 lg:mr-32">
-                        <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-                            <div class="absolute inset-y-0 flex items-center pl-2">
+                    <div class="flex flex-1 justify-center lg:mr-32">
+                        <div class="relative mr-6 w-full max-w-xl focus-within:text-purple-500">
+                            <div class="flex absolute inset-y-0 items-center pl-2">
                                 <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
@@ -132,11 +132,11 @@
                                 </svg>
                             </div>
                             <input
-                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                                class="pr-2 pl-8 w-full text-sm placeholder-gray-600 text-gray-700 bg-gray-100 rounded-md border-0 dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
                                 type="text" placeholder="Search" aria-label="Search" />
                         </div>
                     </div>
-                    <ul class="flex items-center flex-shrink-0 space-x-6">
+                    <ul class="flex flex-shrink-0 items-center space-x-6">
                         <li class="flex">
                             <button class="rounded-md focus:outline-none focus:shadow-outline-purple"
                                 @click="toggleTheme" aria-label="Toggle color mode">
@@ -167,12 +167,12 @@
                                 <ul x-transition:leave="transition ease-in duration-150"
                                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
                                     @click.away="closeProfileMenu" @keydown.escape="closeProfileMenu"
-                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
+                                    class="absolute right-0 p-2 mt-2 space-y-2 w-56 text-gray-600 bg-white rounded-md border border-gray-100 shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
                                     aria-label="submenu">
                                     <li class="flex">
-                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                        <a class="inline-flex items-center px-2 py-1 w-full text-sm font-semibold rounded-md transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                             href="#">
-                                            <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
+                                            <svg class="mr-3 w-4 h-4" aria-hidden="true" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path
@@ -183,9 +183,9 @@
                                         </a>
                                     </li>
                                     <li class="flex">
-                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                        <a class="inline-flex items-center px-2 py-1 w-full text-sm font-semibold rounded-md transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                             href="#">
-                                            <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
+                                            <svg class="mr-3 w-4 h-4" aria-hidden="true" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path
@@ -197,9 +197,9 @@
                                         </a>
                                     </li>
                                     <li class="flex">
-                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                        <a class="inline-flex items-center px-2 py-1 w-full text-sm font-semibold rounded-md transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                             href="#">
-                                            <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
+                                            <svg class="mr-3 w-4 h-4" aria-hidden="true" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path
@@ -215,8 +215,8 @@
                     </ul>
                 </div>
             </header>
-            <main class="h-full overflow-y-auto pb-16">
-                <div class="container px-6 mx-auto grid">
+            <main class="overflow-y-auto pb-16 h-full">
+                <div class="container grid px-6 mx-auto">
                     {{ $slot }}
                 </div>
             </main>

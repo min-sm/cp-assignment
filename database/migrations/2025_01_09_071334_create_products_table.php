@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->check('price >= 0');
             $table->integer('stock_quantity')->check('stock_quantity >= 0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -75,15 +75,12 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
-        $validated = $request->validate([
+        $request->validate([
             'model' => 'required',
             'brand' => 'required|exists:brands,id',
             'series' => [
                 'nullable',
-                Rule::exists('series', 'id')->where(function ($query) use ($request) {
-                    return $query->where('brand_id', $request->brand);
-                }),
+                Rule::exists('series', 'id')->where(fn($query) => $query->where('brand_id', $request->brand)),
             ],
             'category' => 'required|exists:categories,id',
             'description' => 'nullable',
@@ -95,28 +92,30 @@ class ProductController extends Controller
             'series.exists' => 'The selected series does not belong to the chosen brand.',
         ]);
 
-        // Create the product
         $product = Product::create([
-            'model' => $validated['model'],
-            'series_id' => $validated['series'] ?? null,
-            'brand_id' => $validated['brand'],
-            'category_id' => $validated['category'],
-            'description' => $validated['description'],
-            'price' => $validated['price'],
-            'stock_quantity' => $validated['quantity'],
+            'model' => $request->model,
+            'series_id' => $request->series ?? null,
+            'brand_id' => $request->brand,
+            'category_id' => $request->category,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock_quantity' => $request->quantity,
         ]);
 
-        // Handle file uploads
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $path = $file->store('img/products/' . $product->id, 'public');
-                $product->images()->create([
-                    'image_path' => $path,
-                ]);
+                $path = $file->store("img/products/{$product->id}", 'public');
+                $product->images()->create(['image_path' => $path]);
             }
         }
 
-        // Redirect or return response
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }
