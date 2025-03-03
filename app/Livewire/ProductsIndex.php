@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Livewire\Attributes\On;
@@ -20,6 +21,12 @@ class ProductsIndex extends Component
     public $selectedBrand = '';
     public $sortBy = '';
     public $filters;
+    protected ProductRepository $productRepository;
+
+    public function boot(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
 
     public function mount($filters = [])
     {
@@ -43,25 +50,18 @@ class ProductsIndex extends Component
 
     public function render()
     {
-        $products = Product::withCommonRelations()
-            ->when($this->search, fn($q) => $q->where('model', 'like', "%{$this->search}%")
-                ->orWhere('description', 'like', "%{$this->search}%"))
-            ->when($this->selectedCategory, fn($q) => $q->forCategory($this->selectedCategory))
-            ->when($this->selectedBrand, fn($q) => $q->forBrand($this->selectedBrand))
-            ->when($this->sortBy, function ($q) {
-                match ($this->sortBy) {
-                    'price_asc' => $q->sortedBy('price', 'asc'),
-                    'price_desc' => $q->sortedBy('price', 'desc'),
-                    default => $q
-                };
-            })
-            ->inStock()
-            ->paginate(12);
-
-        return view('livewire.products-index', [
-            'products' => $products,
-            'categories' => Category::all(),
-            'brands' => Brand::all()
+        $products = $this->productRepository->getProducts([
+            'search' => $this->search,
+            'category' => $this->selectedCategory,
+            'brand' => $this->selectedBrand,
+            'sortBy' => $this->sortBy,
+            'in_stock' => true,
         ]);
+
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        Debugbar::info($products->map(fn($product) => $product->id));
+        return view('livewire.products-index', compact('products', 'categories', 'brands'));
     }
 }

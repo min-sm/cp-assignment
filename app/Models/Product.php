@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -69,57 +71,108 @@ class Product extends Model
         return 'slug';
     }
 
-    public function scopeWithCommonRelations($query)
+    /**
+     * Scope: Apply common eager loading relationships
+     */
+    public function scopeWithCommonRelations(Builder $query): Builder
     {
         return $query->with(['images', 'category', 'series.brand']);
     }
 
-    public function scopeForCategory($query, $categoryId)
+    /**
+     * Scope: Filter by search term on model and description
+     */
+    public function scopeSearch(Builder $query, ?string $search): Builder
     {
+        if (!$search) {
+            return $query;
+        }
+
+        return $query->where(function ($q) use ($search) {
+            $q->where('model', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+        });
+    }
+
+    /**
+     * Scope: Filter by category ID
+     */
+    public function scopeByCategory(Builder $query, ?int $categoryId): Builder
+    {
+        if (!$categoryId) {
+            return $query;
+        }
+
         return $query->where('category_id', $categoryId);
     }
 
-    public function scopeForBrand($query, $brandId)
+    /**
+     * Scope: Filter by brand ID
+     */
+    public function scopeByBrand(Builder $query, ?int $brandId): Builder
     {
+        Debugbar::info('$brandId', $brandId);
+        if (!$brandId) {
+            return $query;
+        }
+
         return $query->whereHas('series', function ($q) use ($brandId) {
             $q->where('brand_id', $brandId);
         });
     }
 
-    public function scopeInStock($query)
+    /**
+     * Scope: Filter by in-stock status
+     */
+    public function scopeInStock(Builder $query, bool $inStock = true): Builder
     {
+        if (!$inStock) {
+            return $query;
+        }
+
         return $query->where('stock_quantity', '>', 0);
     }
 
-    public function scopeExcludeIds($query, array $ids)
+    /**
+     * Scope: Apply sorting based on a string key
+     */
+    public function scopeApplySorting(Builder $query, ?string $sortBy): Builder
     {
+        if (!$sortBy) {
+            return $query;
+        }
+
+        switch ($sortBy) {
+            case 'price_asc':
+                return $query->orderBy('price', 'asc');
+            case 'price_desc':
+                return $query->orderBy('price', 'desc');
+            case 'newest':
+                return $query->orderBy('created_at', 'desc');
+            case 'oldest':
+                return $query->orderBy('created_at', 'asc');
+            default:
+                return $query;
+        }
+    }
+
+    /**
+     * Scope: Exclude specific product IDs
+     */
+    public function scopeExcludeIds(Builder $query, array $ids): Builder
+    {
+        if (empty($ids)) {
+            return $query;
+        }
+
         return $query->whereNotIn('id', $ids);
     }
 
-    public function scopeSortedBy($query, $field, $direction)
+    /**
+     * Scope: Find by slug
+     */
+    public function scopeBySlug(Builder $query, string $slug): Builder
     {
-        return $query->orderBy($field, $direction);
-    }
-
-    public function getRelatedProducts(int $limit = 4): Collection
-    {
-        $query = Product::query()
-            ->inStock()
-            ->where('id', '!=', $this->id);
-
-        return $query->where(function ($q) {
-            $q->where('category_id', $this->category_id)
-                ->whereHas('series', fn($q) => $q->where('brand_id', $this->brand_id));
-        })
-            ->orWhere(function ($q) {
-                $q->where('category_id', $this->category_id)
-                    ->excludeIds(
-                        Product::whereHas('series', fn($q) => $q->where('brand_id', $this->brand_id))
-                            ->pluck('id')
-                    );
-            })
-            ->orWhereHas('series', fn($q) => $q->where('brand_id', $this->brand_id))
-            ->limit($limit)
-            ->get();
+        return $query->where('slug', $slug);
     }
 }

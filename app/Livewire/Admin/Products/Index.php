@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Products;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
@@ -23,6 +24,12 @@ class Index extends Component
     public $selectedBrand = null;
     public $sortField = 'created_at';
     public $sortDirection = 'desc';
+    protected ProductRepository $productRepository;
+
+    public function boot(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
 
     // Reset pagination when any search/filter changes
     public function updatingSearch()
@@ -63,12 +70,11 @@ class Index extends Component
     #[Computed]
     public function products()
     {
-        return Product::withCommonRelations()
-            ->when($this->search, fn($q) => $q->where('model', 'like', "%{$this->search}%"))
-            ->when($this->selectedCategory, fn($q) => $q->forCategory($this->selectedCategory))
-            ->when($this->selectedBrand, fn($q) => $q->forBrand($this->selectedBrand))
-            ->sortedBy($this->sortField, $this->sortDirection)
-            ->paginate(12);
+        return $this->productRepository->getProducts([
+            'search' => $this->search,
+            'category' => $this->selectedCategory,
+            'brand' => $this->selectedBrand,
+        ], $this->sortField, $this->sortDirection);
     }
 
     public function setViewMode($mode)

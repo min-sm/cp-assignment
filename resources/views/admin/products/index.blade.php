@@ -30,7 +30,7 @@
 
         <div class="flex gap-2">
             <select wire:model.live="sortField" class="flex-1 p-2 rounded-md border">
-                <option value="name">Name</option>
+                <option value="model">Model</option>
                 <option value="price">Price</option>
                 <option value="created_at">Date Added</option>
             </select>

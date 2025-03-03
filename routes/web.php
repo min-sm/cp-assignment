@@ -54,12 +54,14 @@ Route::fallback(function () {
 Route::prefix('admin')->group(function () {
     // Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
-    Route::get('/products', Index::class)->name('admin.products.index');
-    Route::get('/products/create', Create::class)->name('admin.products.create');
-    Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
-    Route::get('/products/{slug}', Show::class)->name('admin.products.show');
-    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.delete');
-    Route::get('/products/{slug}/edit', [Edit::class])->name('admin.products.edit');
+    Route::prefix('products')->group(function () {
+        Route::get('/', Index::class)->name('admin.products.index');
+        Route::get('/create', Create::class)->name('admin.products.create');
+        Route::post('/', [ProductController::class, 'store'])->name('admin.products.store');
+        Route::get('/{slug}', Show::class)->name('admin.products.show');
+        Route::delete('/{id}', [ProductController::class, 'destroy'])->name('admin.products.delete');
+        Route::get('/{slug}/edit', Edit::class)->name('admin.products.edit');
+    });
 });
 
 Route::get('/test', function () {

@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
+
+    protected ProductRepository $productRepository;
+
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     public function index()
     {
         return view('pages.products.index', ['request' => []]);
@@ -16,13 +25,17 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::withCommonRelations()
-            ->where('slug', $slug)
-            ->firstOrFail();
+        // Fetch the product
+        $product = $this->productRepository->findBySlug($slug);
 
-        $products = $product->getRelatedProducts(4);
+        // Get related products
+        $relatedProducts = $this->productRepository->getRelatedProducts($product);
 
-        return view('pages.products.show', compact('product', 'products'));
+        // Pass data to view
+        return view('pages.products.show', [
+            'product' => $product,
+            'products' => $relatedProducts
+        ]);
     }
 
     public function filter(Request $request)
