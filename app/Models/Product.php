@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -66,5 +67,59 @@ class Product extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function scopeWithCommonRelations($query)
+    {
+        return $query->with(['images', 'category', 'series.brand']);
+    }
+
+    public function scopeForCategory($query, $categoryId)
+    {
+        return $query->where('category_id', $categoryId);
+    }
+
+    public function scopeForBrand($query, $brandId)
+    {
+        return $query->whereHas('series', function ($q) use ($brandId) {
+            $q->where('brand_id', $brandId);
+        });
+    }
+
+    public function scopeInStock($query)
+    {
+        return $query->where('stock_quantity', '>', 0);
+    }
+
+    public function scopeExcludeIds($query, array $ids)
+    {
+        return $query->whereNotIn('id', $ids);
+    }
+
+    public function scopeSortedBy($query, $field, $direction)
+    {
+        return $query->orderBy($field, $direction);
+    }
+
+    public function getRelatedProducts(int $limit = 4): Collection
+    {
+        $query = Product::query()
+            ->inStock()
+            ->where('id', '!=', $this->id);
+
+        return $query->where(function ($q) {
+            $q->where('category_id', $this->category_id)
+                ->whereHas('series', fn($q) => $q->where('brand_id', $this->brand_id));
+        })
+            ->orWhere(function ($q) {
+                $q->where('category_id', $this->category_id)
+                    ->excludeIds(
+                        Product::whereHas('series', fn($q) => $q->where('brand_id', $this->brand_id))
+                            ->pluck('id')
+                    );
+            })
+            ->orWhereHas('series', fn($q) => $q->where('brand_id', $this->brand_id))
+            ->limit($limit)
+            ->get();
     }
 }

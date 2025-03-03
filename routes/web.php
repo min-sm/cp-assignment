@@ -7,6 +7,7 @@ use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Products\Create;
+use App\Livewire\Admin\Products\Edit;
 use App\Livewire\Admin\Products\Index;
 use App\Livewire\Admin\Products\Show;
 use App\Models\Product;
@@ -58,6 +59,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
     Route::get('/products/{slug}', Show::class)->name('admin.products.show');
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.delete');
+    Route::get('/products/{slug}/edit', [Edit::class])->name('admin.products.edit');
 });
 
 Route::get('/test', function () {

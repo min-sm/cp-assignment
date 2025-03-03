@@ -43,38 +43,25 @@ class ProductsIndex extends Component
 
     public function render()
     {
-        $products = Product::with(['images', 'category', 'series.brand'])
-            ->when($this->search, function ($query) {
-                $query->where('model', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
+        $products = Product::withCommonRelations()
+            ->when($this->search, fn($q) => $q->where('model', 'like', "%{$this->search}%")
+                ->orWhere('description', 'like', "%{$this->search}%"))
+            ->when($this->selectedCategory, fn($q) => $q->forCategory($this->selectedCategory))
+            ->when($this->selectedBrand, fn($q) => $q->forBrand($this->selectedBrand))
+            ->when($this->sortBy, function ($q) {
+                match ($this->sortBy) {
+                    'price_asc' => $q->sortedBy('price', 'asc'),
+                    'price_desc' => $q->sortedBy('price', 'desc'),
+                    default => $q
+                };
             })
-            ->when($this->selectedCategory, function ($query) {
-                $query->whereHas('category', function ($query) {
-                    $query->where('id', $this->selectedCategory);
-                });
-            })
-            ->when($this->selectedBrand, function ($query) {
-                $query->whereHas('series.brand', function ($query) {
-                    $query->where('id', $this->selectedBrand);
-                });
-            })
-            ->when($this->sortBy, function ($query) {
-                switch ($this->sortBy) {
-                    case 'price_asc':
-                        $query->orderBy('price', 'asc');
-                        break;
-                    case 'price_desc':
-                        $query->orderBy('price', 'desc');
-                        break;
-                }
-            })
-            ->where('stock_quantity', '>', 0)
+            ->inStock()
             ->paginate(12);
 
-        $categories = Category::all();
-        $brands = Brand::all();
-
-        Debugbar::info($products->map(fn($product) => $product->id));
-        return view('livewire.products-index', compact('products', 'categories', 'brands'));
+        return view('livewire.products-index', [
+            'products' => $products,
+            'categories' => Category::all(),
+            'brands' => Brand::all()
+        ]);
     }
 }

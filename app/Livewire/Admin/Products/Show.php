@@ -16,11 +16,10 @@ class Show extends Component
 
     public function render()
     {
-        $product = Product::with(['images', 'category', 'series.brand'])
-        ->where('slug', $this->slug)
-        ->firstOrFail();
-        
-        Debugbar::info($product);
+        $product = Product::withCommonRelations()
+            ->where('slug', $this->slug)
+            ->firstOrFail();
+
         return view('admin.products.show', compact('product'));
     }
 }

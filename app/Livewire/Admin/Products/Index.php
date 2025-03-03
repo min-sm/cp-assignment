@@ -63,15 +63,11 @@ class Index extends Component
     #[Computed]
     public function products()
     {
-        return Product::with(['images', 'category', 'series.brand'])
-            ->when($this->search, fn($q) => $q->where('model', 'like', '%' . $this->search . '%'))
-            ->when($this->selectedCategory, fn($q) => $q->where('category_id', $this->selectedCategory))
-            ->when($this->selectedBrand, fn($q) => $q->whereHas(
-                'series',
-                fn($q) =>
-                $q->where('brand_id', $this->selectedBrand)
-            ))
-            ->orderBy($this->sortField, $this->sortDirection)
+        return Product::withCommonRelations()
+            ->when($this->search, fn($q) => $q->where('model', 'like', "%{$this->search}%"))
+            ->when($this->selectedCategory, fn($q) => $q->forCategory($this->selectedCategory))
+            ->when($this->selectedBrand, fn($q) => $q->forBrand($this->selectedBrand))
+            ->sortedBy($this->sortField, $this->sortDirection)
             ->paginate(12);
     }
 
