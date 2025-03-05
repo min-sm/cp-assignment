@@ -8,28 +8,14 @@ use App\Models\Serie;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Create extends Component
 {
-    public $selectedBrand;
-    public $filteredSeries = [];
-
     #[Title('Create Product')]
     #[Layout('admin.layouts.default')]
-
-    public function updatedSelectedBrand($value)
-    {
-        Debugbar::info($value);
-        if (is_numeric($value)) {
-            $this->filteredSeries = Serie::where('brand_id', $value)->get();
-        } else {
-            $this->filteredSeries = [];
-            $this->selectedBrand = null;
-        }
-        Debugbar::info($this->selectedBrand, $this->filteredSeries);
-    }
 
     public function render()
     {
