@@ -27,7 +27,10 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'phone_number' => $this->faker->numerify('09#########'),
+            'address' => $this->faker->address(),
             'password' => static::$password ??= Hash::make('password'),
+            // 'role' => $this->faker->randomElement(['admin', 'customers']),
             'remember_token' => Str::random(10),
         ];
     }
@@ -40,5 +43,19 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Configure the model to be an admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'admin',
+            ];
+        });
     }
 }

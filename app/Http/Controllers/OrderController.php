@@ -42,7 +42,7 @@ class OrderController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $productId,
                     'quantity' => $item['quantity'],
-                    'price' => $item['price'],
+                    'price' => $item['price'] * $item['quantity'],
                 ]);
 
                 // Reduce stock_quantity

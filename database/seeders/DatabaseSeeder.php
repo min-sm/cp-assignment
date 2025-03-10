@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Brand;
+use App\Models\Inquiry;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Serie;
 use App\Models\User;
@@ -77,5 +80,52 @@ class DatabaseSeeder extends Seeder
         Serie::factory()->count(10)->create();
         Product::factory()->count(50)->create();
         DB::table('product_images')->insert($photos);
+
+        // Create users
+        User::factory(50)->create();
+
+        // Create orders
+        Order::factory(30)->create();
+
+        // Create order items (2-5 items per order)
+        $orders = Order::all();
+
+        foreach ($orders as $order) {
+            // Generate 2-5 items per order
+            $itemCount = rand(2, 5);
+
+            // Get distinct random products to avoid duplicates in the same order
+            $products = Product::inRandomOrder()->take($itemCount)->get();
+
+            foreach ($products as $product) {
+                $quantity = rand(1, 3);
+
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                    'price' => $product->price * $quantity,
+                    'created_at' => $order->created_at,
+                    'updated_at' => $order->created_at,
+                ]);
+            }
+
+            // Calculate and update the total order amount
+            $totalAmount = OrderItem::where('order_id', $order->id)
+                ->selectRaw('SUM(price * quantity) as total')
+                ->first()
+                ->total;
+
+            $order->update(['total_amount' => $totalAmount]);
+        }
+
+        // Create inquiries
+        Inquiry::factory(20)->create();
+
+        // Ensure at least one admin exists
+        User::factory()->admin()->create([
+            'email' => 'admin@example.com',
+            'name' => 'Admin User'
+        ]);
     }
 }

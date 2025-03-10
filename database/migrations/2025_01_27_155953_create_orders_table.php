@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relationship with User
             $table->decimal('total_amount', 10, 2); // Total amount of the order
-            $table->string('payment_method'); // Payment method (e.g., cash_on_delivery, kbzpay)
+            $table->enum('payment_method', ['Cash on Delivery', 'KBZPay']); // Payment method (e.g., cash_on_delivery, kbzpay)
             $table->string('kbzpay_number')->nullable(); // KBZPay number (nullable)
-            $table->string('status')->default('pending'); // Order status
+            $table->enum('status', ['pending', 'shipped', 'completed'])->default('pending');
             $table->timestamps();
         });
     }
