@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StripePaymentController;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Products\Create;
 use App\Livewire\Admin\Products\Edit;
@@ -67,3 +68,8 @@ Route::prefix('admin')->group(function () {
 Route::get('/test', function () {
     return view('pages.test');
 })->name('test');
+
+Route::controller(StripePaymentController::class)->group(function () {
+    Route::get('stripe', 'stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
