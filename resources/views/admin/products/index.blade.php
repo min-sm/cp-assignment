@@ -127,7 +127,7 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-4">
-                                    <a href="#"
+                                    <a href="{{ route('admin.products.edit', ['slug' => $product->slug]) }}"
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                     <div x-data="{ modalIsOpen: false }">
                                         <!-- Delete Trigger Button -->

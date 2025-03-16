@@ -124,7 +124,7 @@
             </div>
 
             <div class="flex justify-between">
-                <x-button-link href="{{ route('about') }}">Edit</x-button-link>
+                <x-button-link href="{{ route('admin.products.edit', ['slug' => $product->slug]) }}">Edit</x-button-link>
                 <x-button-link href="{{ route('product.show', ['slug' => $product->slug]) }}" color="yellow">View on
                     store</x-button-link>
                 <div x-data="{ modalIsOpen: false }">

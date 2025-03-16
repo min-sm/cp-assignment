@@ -62,6 +62,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/{slug}', Show::class)->name('admin.products.show');
         Route::delete('/{id}', [ProductController::class, 'destroy'])->name('admin.products.delete');
         Route::get('/{slug}/edit', Edit::class)->name('admin.products.edit');
+        Route::put('/{slug}', [ProductController::class, 'update'])->name('admin.products.update');
     });
 });
 

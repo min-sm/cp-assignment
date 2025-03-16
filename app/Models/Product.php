@@ -62,8 +62,7 @@ class Product extends Model
             ->generateSlugsFrom(function ($model) {
                 return $model->brand->name . ' ' . $model->model;
             })
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate(false);
+            ->saveSlugsTo('slug');
     }
 
     public function getRouteKeyName()

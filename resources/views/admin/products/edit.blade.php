@@ -2,12 +2,13 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new product</h2>
-            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data"
-                x-data="{ selectedBrandName: '' }">
+            <form action="{{ route('admin.products.update', ['slug' => $product->slug]) }}" method="POST"
+                enctype="multipart/form-data" x-data="{ selectedBrandName: '{{ $product->brand->name }}' }">
                 @csrf
+                @method('PUT')
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <x-form.input name="model" label="Product model" placeholder="Type product model" :required="true"
-                        class="sm:col-span-2" />
+                        class="sm:col-span-2" :value="$product->model" />
                     <div class="w-full">
                         <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Brand
@@ -18,7 +19,8 @@
                             required>
                             <option>Select brand</option>
                             @foreach ($brands as $brand)
-                                <option value="{{ $brand->id }}" {{ old('brand') == $brand->id ? 'selected' : '' }}>
+                                <option value="{{ $brand->id }}"
+                                    {{ old('brand', $product->brand_id) == $brand->id ? 'selected' : '' }}>
                                     {{ ucfirst($brand->name) }}
                                 </option>
                             @endforeach
@@ -39,7 +41,7 @@
                             <option value="">Select series</option>
                             @foreach ($filteredSeries as $series)
                                 <option value="{{ $series->id }}"
-                                    {{ old('series') == $series->id ? 'selected' : '' }}>
+                                    {{ old('series', $product->series_id) == $series->id ? 'selected' : '' }}>
                                     {{ ucfirst($series->name) }}
                                 </option>
                             @endforeach
@@ -63,7 +65,7 @@
                             </option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
-                                    {{ old('category') == $category->id ? 'selected' : '' }}>
+                                    {{ old('category', $product->category_id) == $category->id ? 'selected' : '' }}>
                                     {{ ucfirst($category->name) }}
                                 </option>
                             @endforeach
@@ -73,11 +75,12 @@
                         @enderror
                     </div>
                     <x-form.input name="quantity" label="Quantity" placeholder="Enter quantity" :required="true"
-                        type="number" :inputAttributes="['min' => 1]" />
+                        type="number" :inputAttributes="['min' => 1]" :value="$product->stock_quantity" />
                     <x-form.input name="price" label="Price" placeholder="Enter price" :required="true"
-                        type="number" :inputAttributes="['min' => 1]" />
+                        type="number" :inputAttributes="['min' => 1]" :value="$product->price" />
                     <x-form.input name="description" label="Description" placeholder="Product description here"
-                        :required="false" element="textarea" class="sm:col-span-2" />
+                        :required="false" element="textarea" class="sm:col-span-2" :value="$product->description" />
+                    {{-- TODO: shows the images selected and default images in the database --}}
                     <x-form.input name="files[]" label="Upload multiple files" type="file" :inputAttributes="['multiple' => true]"
                         class="sm:col-span-2" />
 

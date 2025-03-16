@@ -4,6 +4,7 @@
     'type' => 'text',
     'placeholder' => '',
     'required' => false,
+    'value' => '',
     'inputAttributes' => [],
     'element' => 'input',
     'inputClass' => '',
@@ -11,7 +12,8 @@
 ])
 
 <div {{ $attributes }}>
-    <label for="{{ preg_replace('/\[\]$/', '', $name) }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+    <label for="{{ preg_replace('/\[\]$/', '', $name) }}"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         {{ $label }}
     </label>
 
@@ -29,9 +31,7 @@
                 : '';
         @endphp
         <input type="{{ $type }}" id="{{ preg_replace('/\[\]$/', '', $name) }}" name="{{ $name }}"
-            @if ($type !== 'file') value="{{ old($name) }}"
-                placeholder="{{ $placeholder }}" @endif
-            {{ $required ? 'required' : '' }}
+            value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}" {{ $required ? 'required' : '' }}
             @foreach ($inputAttributes as $attribute => $value)
                 {{ $attribute }}="{{ $value }}" @endforeach
             class="{{ $defaultClass }} {{ $errorClass }} {{ $inputClass }}" />
@@ -47,7 +47,7 @@
             placeholder="{{ $placeholder }}" {{ $required ? 'required' : '' }}
             @foreach ($inputAttributes as $attribute => $value)
                 {{ $attribute }}="{{ $value }}" @endforeach
-            class="{{ $defaultClass }} {{ $errorClass }} {{ $inputClass }}">{{ old($name) }}</textarea>
+            class="{{ $defaultClass }} {{ $errorClass }} {{ $inputClass }}">{{ old($name, $value) }}</textarea>
     @endif
 
     @error($name)
