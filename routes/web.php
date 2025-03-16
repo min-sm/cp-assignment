@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
@@ -64,6 +65,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/{slug}/edit', Edit::class)->name('admin.products.edit');
         Route::put('/{slug}', [ProductController::class, 'update'])->name('admin.products.update');
     });
+    Route::get('brands/create', [BrandController::class, 'create'])->name('admin.brands.create');
+    Route::post('brands', [BrandController::class,'store'])->name('admin.brands.store');
 });
 
 Route::get('/test', function () {

@@ -16,7 +16,8 @@
         <!-- Sidebar -->
         <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
             <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="{{ route('admin.dashboard') }}">
+                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+                    href="{{ route('admin.dashboard') }}">
                     Admin Panel
                 </a>
                 <ul class="mt-6">
@@ -217,7 +218,11 @@
             </header>
             <main class="overflow-y-auto pb-16 h-full">
                 <div class="container grid px-6 mx-auto">
-                    {{ $slot }}
+                    @if (isset($slot))
+                        {{ $slot }}
+                    @else
+                        @yield('content')
+                    @endif
                 </div>
             </main>
         </div>
