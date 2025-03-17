@@ -14,7 +14,7 @@
                             Brand
                         </label>
                         <select id="brand" name="brand" wire:poll.30s.visible wire:model.change="selectedBrand"
-                            @change="if ($event.target.selectedIndex === $event.target.options.length - 1) { window.open('{{ route('test') }}'); $event.target.selectedIndex = 0; }; selectedBrandName = $event.target.options[$event.target.selectedIndex].text;"
+                            @change="if ($event.target.selectedIndex === $event.target.options.length - 1) { window.open('{{ route('admin.brands.create') }}'); $event.target.selectedIndex = 0; }; selectedBrandName = $event.target.options[$event.target.selectedIndex].text;"
                             class="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 {{ $errors->has('brand') ? 'border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50 dark:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 text-red-900 dark:text-red-50' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-gray-900 dark:text-white' }}"
                             required>
                             <option>Select brand</option>
@@ -37,6 +37,7 @@
                         <label for="series"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series</label>
                         <select id="series" name="series" wire:poll.30s.visible @disabled($selectedBrand === null)
+                            @change="if ($event.target.selectedIndex === $event.target.options.length - 1) { window.open('{{ route('admin.brands.edit', $selectedBrand ?? 0) }}'); $event.target.selectedIndex = 0; };"
                             class="bg-gray-50 border text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 {{ $errors->has('series') ? 'border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50 dark:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 text-red-900 dark:text-red-50' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-gray-900 dark:text-white' }}">
                             <option value="">Select series</option>
                             @foreach ($filteredSeries as $series)
