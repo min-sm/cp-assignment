@@ -31,6 +31,15 @@ class Product extends Model
         'stock_quantity',
     ];
 
+    // protected static function booted()
+    // {
+    //     static::updating(function ($product) {
+    //         if ($product->isDirty(['brand_id', 'model'])) {
+    //             $product->generateSlug();
+    //         }
+    //     });
+    // }
+
     public function series(): BelongsTo
     {
         return $this->belongsTo(Serie::class);
