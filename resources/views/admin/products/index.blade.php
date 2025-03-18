@@ -182,7 +182,7 @@
                                                         No, Cancel
                                                     </button>
                                                     <form method="POST"
-                                                        action="{{ route('admin.products.delete', $product->id) }}">
+                                                        action="{{ route('admin.products.destroy', $product->id) }}">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"

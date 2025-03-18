@@ -175,7 +175,7 @@
                                     class="whitespace-nowrap rounded-sm px-4 py-2 text-center text-sm font-medium tracking-wide text-red-600 transition hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 active:opacity-100 active:outline-offset-0 dark:text-red-300 dark:focus-visible:outline-red-600">
                                     No, Cancel
                                 </button>
-                                <form method="POST" action="{{ route('admin.products.delete', $product->id) }}">
+                                <form method="POST" action="{{ route('admin.products.destroy', $product->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"

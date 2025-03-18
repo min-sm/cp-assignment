@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\UserController;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Products\Create;
 use App\Livewire\Admin\Products\Edit;
@@ -61,21 +62,18 @@ Route::prefix('admin')->group(function () {
         Route::get('/create', Create::class)->name('admin.products.create');
         Route::post('/', [ProductController::class, 'store'])->name('admin.products.store');
         Route::get('/{slug}', Show::class)->name('admin.products.show');
-        Route::delete('/{id}', [ProductController::class, 'destroy'])->name('admin.products.delete');
+        Route::delete('/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
         Route::get('/{slug}/edit', Edit::class)->name('admin.products.edit');
         Route::put('/{slug}', [ProductController::class, 'update'])->name('admin.products.update');
     });
     Route::prefix('brands')->group(function () {
-        Route::get('/create', [BrandController::class, 'create'])->name('admin.brands.create');
-        Route::post('/', [BrandController::class, 'store'])->name('admin.brands.store');
-        Route::get('/{id}/edit', [BrandController::class, 'edit'])->name('admin.brands.edit');
-        Route::put('/{id}', [BrandController::class, 'update'])->name('admin.brands.update');
-        Route::get('/', [BrandController::class, 'index'])->name('admin.brands.index');
-        Route::delete('/{id}', [BrandController::class, 'destroy'])->name('admin.brands.delete');
-        // Route::get('/{id}', [BrandController::class,'show'])->name('admin.brands.show');
+        Route::resource('/', BrandController::class)
+            ->names('admin.brands')
+            ->parameters(['' => 'id'])
+            ->except(['show']); // Exclude 'show' if not needed
     });
-    Route::prefix('users')->group(function() {
-        Route::get('/', [AuthController::class, 'adminUsers'])->name('admin.users.index');        
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
     });
 });
 
