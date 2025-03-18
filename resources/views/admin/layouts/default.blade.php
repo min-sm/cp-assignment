@@ -240,7 +240,7 @@
                             <template x-if="isProfileMenuOpen">
                                 <ul x-transition:leave="transition ease-in duration-150"
                                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                                    @click.away="closeProfileMenu" @keydown.escape="closeProfileMenu"
+                                    {{-- @click.away="closeProfileMenu"  --}} @keydown.escape="closeProfileMenu"
                                     class="absolute right-0 p-2 mt-2 space-y-2 w-56 text-gray-600 bg-white rounded-md border border-gray-100 shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
                                     aria-label="submenu">
                                     <li class="flex">
@@ -272,7 +272,8 @@
                                     </li>
                                     <li class="flex">
                                         <a class="inline-flex items-center px-2 py-1 w-full text-sm font-semibold rounded-md transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#">
+                                            href="#"
+                                            @click.prevent="document.getElementById('logout-form').submit()">
                                             <svg class="mr-3 w-4 h-4" aria-hidden="true" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -282,6 +283,10 @@
                                             </svg>
                                             <span>Log out</span>
                                         </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
                                     </li>
                                 </ul>
                             </template>

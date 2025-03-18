@@ -85,7 +85,8 @@ Route::prefix('admin')->group(function () {
     //     Route::get('/', [OrderController::class, 'index'])->name('admin.orders.index');
     //     Route::get('/{id}', [OrderController::class,'show'])->name('admin.orders.show');
     // });
-
+    Route::get('login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login');
+    Route::post('login', [AuthController::class, 'adminLogin']);
 });
 
 Route::get('/test', function () {
