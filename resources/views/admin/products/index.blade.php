@@ -5,6 +5,9 @@
     @if (session('success'))
         <x-alert type="success" message="{{ session('success') }}" />
     @endif
+    @if (session('error'))
+        <x-alert type="error" message="{{ session('error') }}" />
+    @endif
     <div class="flex justify-end items-end mb-4 space-x-4">
         <x-button link="{{ route('admin.products.create') }}" label="Add new product" />
     </div>

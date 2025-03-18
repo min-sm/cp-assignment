@@ -13,6 +13,7 @@ use App\Livewire\Admin\Products\Create;
 use App\Livewire\Admin\Products\Edit;
 use App\Livewire\Admin\Products\Index;
 use App\Livewire\Admin\Products\Show;
+use App\Livewire\Admin\Users\Index as UsersIndex;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -74,7 +75,17 @@ Route::prefix('admin')->group(function () {
     });
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
+        // Route::get('/', UsersIndex::class)->name('admin.users.index');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     });
+    Route::get('create', [UserController::class, 'create'])->name('admin.create');
+    Route::post('/', [UserController::class, 'store'])->name('admin.store');
+    Route::get('edit', [UserController::class, 'adminEdit'])->name('admin.edit');
+    // Route::prefix('orders')->group(function () {
+    //     Route::get('/', [OrderController::class, 'index'])->name('admin.orders.index');
+    //     Route::get('/{id}', [OrderController::class,'show'])->name('admin.orders.show');
+    // });
+
 });
 
 Route::get('/test', function () {

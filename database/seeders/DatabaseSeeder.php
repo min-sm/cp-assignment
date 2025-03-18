@@ -124,7 +124,7 @@ class DatabaseSeeder extends Seeder
 
         // Ensure at least one admin exists
         User::factory()->admin()->create([
-            'email' => 'admin@example.com',
+            'email' => 'admin@tg.com',
             'name' => 'Admin User'
         ]);
     }
