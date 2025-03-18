@@ -65,10 +65,18 @@ Route::prefix('admin')->group(function () {
         Route::get('/{slug}/edit', Edit::class)->name('admin.products.edit');
         Route::put('/{slug}', [ProductController::class, 'update'])->name('admin.products.update');
     });
-    Route::get('brands/create', [BrandController::class, 'create'])->name('admin.brands.create');
-    Route::post('brands', [BrandController::class,'store'])->name('admin.brands.store');
-    Route::get('brands/{id}/edit', [BrandController::class, 'edit'])->name('admin.brands.edit');
-    Route::put('brands/{id}', [BrandController::class, 'update'])->name('admin.brands.update');
+    Route::prefix('brands')->group(function () {
+        Route::get('/create', [BrandController::class, 'create'])->name('admin.brands.create');
+        Route::post('/', [BrandController::class, 'store'])->name('admin.brands.store');
+        Route::get('/{id}/edit', [BrandController::class, 'edit'])->name('admin.brands.edit');
+        Route::put('/{id}', [BrandController::class, 'update'])->name('admin.brands.update');
+        Route::get('/', [BrandController::class, 'index'])->name('admin.brands.index');
+        Route::delete('/{id}', [BrandController::class, 'destroy'])->name('admin.brands.delete');
+        // Route::get('/{id}', [BrandController::class,'show'])->name('admin.brands.show');
+    });
+    Route::prefix('users')->group(function() {
+        Route::get('/', [AuthController::class, 'adminUsers'])->name('admin.users.index');        
+    });
 });
 
 Route::get('/test', function () {

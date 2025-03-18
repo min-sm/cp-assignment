@@ -4,7 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ $title ?? 'Admin Panel' }}</title>
+    <title>
+        @if (isset($title))
+            {{ $title }}
+        @elseif(View::hasSection('title'))
+            @yield('title')
+        @else
+            Admin Panel
+        @endif
+    </title>
     <link rel="icon" type="image/png" href="{{ asset('img/common/logo.png') }}" />
     {{-- Load TailwindCSS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -48,6 +56,38 @@
                                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                             </svg>
                             <span class="ml-4">Products</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        @if (request()->routeIs('admin.brands.index'))
+                            <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg bg-royal-blue"
+                                aria-hidden="true"></span>
+                        @endif
+                        <a href="{{ route('admin.brands.index') }}"
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.brands.index') ? 'text-gray-800 dark:text-gray-100' : '' }}">
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.537 12.625a4.421 4.421 0 0 0 2.684 4.047 10.96 10.96 0 0 1-1.384 2.845c-.834 1.218-1.7 2.432-3.062 2.457-1.34.025-1.77-.794-3.3-.794-1.531 0-2.01.769-3.275.82-1.316.049-2.317-1.318-3.158-2.532-1.72-2.484-3.032-7.017-1.27-10.077A4.9 4.9 0 0 1 8.91 6.884c1.292-.025 2.51.869 3.3.869.789 0 2.27-1.075 3.828-.917a4.67 4.67 0 0 1 3.66 1.984 4.524 4.524 0 0 0-2.16 3.805m-2.52-7.432A4.4 4.4 0 0 0 16.06 2a4.482 4.482 0 0 0-2.945 1.516 4.185 4.185 0 0 0-1.061 3.093 3.708 3.708 0 0 0 2.967-1.416Z" />
+                            </svg>
+
+                            <span class="ml-4">Brands</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        @if (request()->routeIs('admin.users.index'))
+                            <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg bg-royal-blue"
+                                aria-hidden="true"></span>
+                        @endif
+                        <a href="{{ route('admin.users.index') }}"
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.users.index') ? 'text-gray-800 dark:text-gray-100' : '' }}">
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H6Zm7.25-2.095c.478-.86.75-1.85.75-2.905a5.973 5.973 0 0 0-.75-2.906 4 4 0 1 1 0 5.811ZM15.466 20c.34-.588.535-1.271.535-2v-1a5.978 5.978 0 0 0-1.528-4H18a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2h-4.535Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-4">Users</span>
                         </a>
                     </li>
                 </ul>
@@ -103,6 +143,39 @@
                                 </path>
                             </svg>
                             <span class="ml-4">Products</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        @if (request()->routeIs('admin.brands.index'))
+                            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                                aria-hidden="true"></span>
+                        @endif
+                        <a href="{{ route('admin.brands.index') }}"
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.brands.index') ? 'text-gray-800 dark:text-gray-100' : '' }}">
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.537 12.625a4.421 4.421 0 0 0 2.684 4.047 10.96 10.96 0 0 1-1.384 2.845c-.834 1.218-1.7 2.432-3.062 2.457-1.34.025-1.77-.794-3.3-.794-1.531 0-2.01.769-3.275.82-1.316.049-2.317-1.318-3.158-2.532-1.72-2.484-3.032-7.017-1.27-10.077A4.9 4.9 0 0 1 8.91 6.884c1.292-.025 2.51.869 3.3.869.789 0 2.27-1.075 3.828-.917a4.67 4.67 0 0 1 3.66 1.984 4.524 4.524 0 0 0-2.16 3.805m-2.52-7.432A4.4 4.4 0 0 0 16.06 2a4.482 4.482 0 0 0-2.945 1.516 4.185 4.185 0 0 0-1.061 3.093 3.708 3.708 0 0 0 2.967-1.416Z" />
+                            </svg>
+
+                            <span class="ml-4">Brands</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        @if (request()->routeIs('admin.users.index'))
+                            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                                aria-hidden="true"></span>
+                        @endif
+                        <a href="{{ route('admin.users.index') }}"
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.users.index') ? 'text-gray-800 dark:text-gray-100' : '' }}">
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H6Zm7.25-2.095c.478-.86.75-1.85.75-2.905a5.973 5.973 0 0 0-.75-2.906 4 4 0 1 1 0 5.811ZM15.466 20c.34-.588.535-1.271.535-2v-1a5.978 5.978 0 0 0-1.528-4H18a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2h-4.535Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+                            <span class="ml-4">Brands</span>
                         </a>
                     </li>
                 </ul>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.default')
 
-@section('title', 'Dashboard')
+@section('title', 'Create new brand')
 
 @section('content')
     <section class="bg-white dark:bg-gray-900">

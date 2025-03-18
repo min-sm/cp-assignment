@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\DB;
 
 class BrandController extends Controller
 {
+
+    public function index()
+    {
+        $brands = Brand::with('series')->get();
+        return view('admin.brands.index', compact('brands'));
+    }
+
     public function create()
     {
         return view('admin.brands.create');
@@ -51,7 +58,7 @@ class BrandController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.dashboard')
+            return redirect()->route('admin.brands.index')
                 ->with('success', 'Brand and series created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -141,13 +148,38 @@ class BrandController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.dashboard')
+            return redirect()->route('admin.brands.index')
                 ->with('success', 'Brand updated successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Error updating brand: ' . $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Find the brand
+            $brand = Brand::findOrFail($id);
+
+            // Delete associated series
+            $brand->series()->delete();
+
+            // Delete the brand
+            $brand->delete();
+
+            DB::commit();
+
+            return redirect()->route('admin.brands.index')
+                ->with('success', 'Brand and associated series deleted successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('admin.brands.index')
+                ->with('error', 'Error deleting brand: ' . $e->getMessage());
         }
     }
 }
