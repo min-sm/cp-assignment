@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\UserController;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Orders\Index as OrdersIndex;
 use App\Livewire\Admin\Products\Create;
 use App\Livewire\Admin\Products\Edit;
 use App\Livewire\Admin\Products\Index;
@@ -86,10 +87,11 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::put('/{id}', [UserController::class, 'adminUpdate'])->name('admin.update');
     Route::get('logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 
-    // Route::prefix('orders')->group(function () {
-    //     Route::get('/', [OrderController::class, 'index'])->name('admin.orders.index');
-    //     Route::get('/{id}', [OrderController::class,'show'])->name('admin.orders.show');
-    // });
+    Route::prefix('orders')->group(function () {
+        // Route::get('/', [OrderController::class, 'index'])->name('admin.orders.index');
+        Route::get('/', OrdersIndex::class)->name('admin.orders.index');
+        Route::get('/{id}', [OrderController::class,'show'])->name('admin.orders.show');
+    });
 });
 
 Route::get('/test', function () {

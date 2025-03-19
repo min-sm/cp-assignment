@@ -90,6 +90,22 @@
                             <span class="ml-4">Users</span>
                         </a>
                     </li>
+                    <li class="relative px-6 py-3">
+                        @if (request()->routeIs('admin.orders.index'))
+                            <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg bg-royal-blue"
+                                aria-hidden="true"></span>
+                        @endif
+                        <a href="{{ route('admin.orders.index') }}"
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.orders.index') ? 'text-gray-800 dark:text-gray-100' : '' }}">
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M5.617 2.076a1 1 0 0 1 1.09.217L8 3.586l1.293-1.293a1 1 0 0 1 1.414 0L12 3.586l1.293-1.293a1 1 0 0 1 1.414 0L16 3.586l1.293-1.293A1 1 0 0 1 19 3v18a1 1 0 0 1-1.707.707L16 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L12 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L8 20.414l-1.293 1.293A1 1 0 0 1 5 21V3a1 1 0 0 1 .617-.924ZM9 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-4">Orders</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </aside>
@@ -175,7 +191,23 @@
                                     clip-rule="evenodd" />
                             </svg>
 
-                            <span class="ml-4">Brands</span>
+                            <span class="ml-4">Users</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        @if (request()->routeIs('admin.orders.index'))
+                            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                                aria-hidden="true"></span>
+                        @endif
+                        <a href="{{ route('admin.orders.index') }}"
+                            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ request()->routeIs('admin.orders.index') ? 'text-gray-800 dark:text-gray-100' : '' }}">
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M5.617 2.076a1 1 0 0 1 1.09.217L8 3.586l1.293-1.293a1 1 0 0 1 1.414 0L12 3.586l1.293-1.293a1 1 0 0 1 1.414 0L16 3.586l1.293-1.293A1 1 0 0 1 19 3v18a1 1 0 0 1-1.707.707L16 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L12 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L8 20.414l-1.293 1.293A1 1 0 0 1 5 21V3a1 1 0 0 1 .617-.924ZM9 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-4">Orders</span>
                         </a>
                     </li>
                 </ul>
