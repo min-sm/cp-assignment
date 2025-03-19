@@ -49,7 +49,7 @@ class UserController extends Controller
             'role' => 'admin',
             'phone_number' => $request->phone_number,
             'address' => $request->address,
-            
+
         ]);
 
         return redirect()->route('admin.dashboard')->with('success', 'Registration successful!');
@@ -89,5 +89,23 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function adminUpdate(Request $request)
+    {
+        // $request->validate([
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255'],
+        //     'phone_number' => ['nullable'],
+        //     'address' => ['nullable'],
+        // ]);
+
+        $user = User::findOrFail(Auth::id());
+
+        $user->update([
+            'password' => $request->password,
+        ]);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Profile updated successfully');
     }
 }

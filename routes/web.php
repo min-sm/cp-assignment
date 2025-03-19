@@ -81,12 +81,15 @@ Route::prefix('admin')->group(function () {
     Route::get('create', [UserController::class, 'create'])->name('admin.create');
     Route::post('/', [UserController::class, 'store'])->name('admin.store');
     Route::get('edit', [UserController::class, 'adminEdit'])->name('admin.edit');
+    Route::put('/{id}', [UserController::class, 'adminUpdate'])->name('admin.update');
+    Route::get('login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login');
+    Route::post('login', [AuthController::class, 'adminLogin']);
+    Route::get('logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
+
     // Route::prefix('orders')->group(function () {
     //     Route::get('/', [OrderController::class, 'index'])->name('admin.orders.index');
     //     Route::get('/{id}', [OrderController::class,'show'])->name('admin.orders.show');
     // });
-    Route::get('login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login');
-    Route::post('login', [AuthController::class, 'adminLogin']);
 });
 
 Route::get('/test', function () {

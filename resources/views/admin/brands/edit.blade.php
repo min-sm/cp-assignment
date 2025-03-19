@@ -1,6 +1,6 @@
 @extends('admin.layouts.default')
 
-@section('title', 'Edit {{ $brand->name }}')
+@section('title', "Edit {$brand->name}")
 
 @section('content')
     <section class="bg-white dark:bg-gray-900">
