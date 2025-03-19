@@ -34,6 +34,9 @@ Route::middleware('guest')->group(function () {
     });
 
     Route::get('/auth/github/callback', [AuthController::class, 'githubCallback']);
+
+    Route::get('admin/login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login');
+    Route::post('admin/login', [AuthController::class, 'adminLogin']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -55,8 +58,7 @@ Route::fallback(function () {
     return view('errors.404');
 });
 
-Route::prefix('admin')->group(function () {
-    // Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
     Route::prefix('products')->group(function () {
         Route::get('/', Index::class)->name('admin.products.index');
@@ -82,8 +84,6 @@ Route::prefix('admin')->group(function () {
     Route::post('/', [UserController::class, 'store'])->name('admin.store');
     Route::get('edit', [UserController::class, 'adminEdit'])->name('admin.edit');
     Route::put('/{id}', [UserController::class, 'adminUpdate'])->name('admin.update');
-    Route::get('login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login');
-    Route::post('login', [AuthController::class, 'adminLogin']);
     Route::get('logout', [AuthController::class, 'adminLogout'])->name('admin.logout');
 
     // Route::prefix('orders')->group(function () {

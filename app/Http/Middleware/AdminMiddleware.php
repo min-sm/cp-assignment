@@ -20,6 +20,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('/')->with('error', 'You do not have permission to access the admin panel.');
+        return redirect()->route('admin.login')->with('error', 'You do not have permission to access the admin panel.');
     }
 }
