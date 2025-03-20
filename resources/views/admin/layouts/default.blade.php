@@ -338,6 +338,7 @@
         </div>
     </div>
     @livewireScripts
+    @livewireChartsScripts
 </body>
 
 </html>
