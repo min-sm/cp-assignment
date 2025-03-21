@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\OrderItem;
+use App\Models\User;
 use Asantibanez\LivewireCharts\Facades\LivewireCharts;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -80,9 +81,12 @@ class Dashboard extends Component
         // ->addSlice('Slice 3', 30, '#90cdf4');
         // dd($test, $pieChartModel);
 
+        $customerCount = User::where('role', 'customers')->count();
+
         return view('admin.pages.dashboard', [
             'columnChartModel' => $columnChartModel,
-            'pieChartModel' => $pieChartModel
+            'pieChartModel' => $pieChartModel,
+            'customerCount' => $customerCount,
         ]);
     }
 }
