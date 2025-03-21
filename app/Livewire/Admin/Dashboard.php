@@ -13,17 +13,6 @@ class Dashboard extends Component
     #[Layout('admin.layouts.default')]
     public function render()
     {
-        $mostSoldProducts = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
-            ->groupBy('product_id')
-            ->orderByDesc('total_quantity')
-            ->with('product') // Assuming you have a relationship defined in OrderItem model
-            ->limit(10) // Limit to top 10 most sold products
-            ->get();
-
-        // Initialize the column chart model
-        $columnChartModel = LivewireCharts::columnChartModel()->setTitle('Most Sold Products');
-
-        // Color palette options - choose one approach
         $colorPalette = [
             '#f6ad55', // Orange
             '#fc8181', // Red
@@ -37,12 +26,23 @@ class Dashboard extends Component
             '#faf089'  // Yellow
         ];
 
+        $mostSoldProducts = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+            ->groupBy('product_id')
+            ->orderByDesc('total_quantity')
+            ->with('product') // Assuming you have a relationship defined in OrderItem model
+            ->limit(10) // Limit to top 10 most sold products
+            ->get();
+
+        // Initialize the column chart model
+        $columnChartModel = LivewireCharts::columnChartModel()->setTitle('10 Most Sold Products');
+
+        // dd($mostSoldProducts[0]->product->model);
         // Add each product to the chart
         foreach ($mostSoldProducts as $index => $item) {
             $columnChartModel->addColumn(
-                $item->product->model, // Product name
-                $item->total_quantity, // Quantity sold
-                $colorPalette[$index % count($colorPalette)] // Cycle through color palette
+                $item->product->model,
+                $item->total_quantity,
+                $colorPalette[$index % count($colorPalette)]
             );
         }
 
@@ -55,8 +55,7 @@ class Dashboard extends Component
             ->get();
 
         // Initialize the pie chart model
-        $pieChartModel = LivewireCharts::pieChartModel()
-            ->setTitle('Most Sold Categories')
+        $pieChartModel = LivewireCharts::pieChartModel()->setTitle('Most Sold Categories')
             ->setAnimated(true)
             ->setType('donut')
             ->legendPositionBottom()
@@ -64,34 +63,22 @@ class Dashboard extends Component
             ->setDataLabelsEnabled(true)
             ->setOpacity(1);
 
-        // Color palette for categories
-        $categoryColors = [
-            '#b01a1b', // Red
-            '#2563eb', // Blue
-            '#16a34a', // Green
-            '#9333ea', // Purple
-            '#f97316', // Orange
-            '#eab308', // Yellow
-            '#14b8a6', // Teal
-            '#ec4899', // Pink
-            '#8b5cf6', // Indigo
-            '#64748b', // Slate
-            '#d41b2c', // Dark Red
-            '#3b82f6', // Light Blue
-            '#22c55e', // Light Green
-            '#a855f7', // Light Purple
-            '#f59e0b', // Dark Orange
-            '#10b981'  // Emerald
-        ];
-
+        // dd($mostSoldCategories[0]->category_name);
         // Add each category to the chart
         foreach ($mostSoldCategories as $index => $category) {
             $pieChartModel->addSlice(
-                $category->category_name,         // Category name
-                $category->total_quantity,        // Total quantity sold
-                $colorPalette[$index % count($colorPalette)] // Cycle through color palette
+                $category->category_name,
+                (int)$category->total_quantity,
+                $colorPalette[$index % count($colorPalette)]
             );
         }
+        // $test = $pieChartModel;
+        // $pieChartModel = LivewireCharts::pieChartModel()
+        // ->setTitle('Test Chart')
+        // ->addSlice('Slice 1', 10, '#f6ad55')
+        // ->addSlice('Slice 2', 20, '#fc8181')
+        // ->addSlice('Slice 3', 30, '#90cdf4');
+        // dd($test, $pieChartModel);
 
         return view('admin.pages.dashboard', [
             'columnChartModel' => $columnChartModel,
