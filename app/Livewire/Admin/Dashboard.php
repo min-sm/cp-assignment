@@ -2,19 +2,48 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\User;
 use Asantibanez\LivewireCharts\Facades\LivewireCharts;
+use Asantibanez\LivewireCharts\Models\ColumnChartModel;
+use Asantibanez\LivewireCharts\Models\PieChartModel;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class Dashboard extends Component
 {
     #[Layout('admin.layouts.default')]
     public function render()
     {
-        $colorPalette = [
+        $colorPalette = $this->getColorPalette();
+
+        $columnChartModel = $this->getMostSoldProductsChart($colorPalette);
+        $pieChartModel = $this->getMostSoldCategoriesChart($colorPalette);
+        $lowStockChart = $this->getLowStockProductsChart($colorPalette);
+
+        $customerCount = User::where('role', 'customers')->count();
+        $completedOrdersTotalAmount = Order::where('status', 'completed')->sum('total_amount');
+        $pendingOrdersCount = Order::where('status', 'pending')->count();
+        $shippedOrdersCount = Order::where('status', 'shipped')->count();
+
+        return view('admin.pages.dashboard', [
+            'columnChartModel' => $columnChartModel,
+            'pieChartModel' => $pieChartModel,
+            'customerCount' => $customerCount,
+            'completedOrdersTotalAmount' => $completedOrdersTotalAmount,
+            'pendingOrdersCount' => $pendingOrdersCount,
+            'lowStockChart' => $lowStockChart,
+            'shippedOrdersCount' => $shippedOrdersCount,
+        ]);
+    }
+
+    private function getColorPalette(): array
+    {
+        return [
             '#f6ad55', // Orange
             '#fc8181', // Red
             '#90cdf4', // Blue
@@ -24,21 +53,23 @@ class Dashboard extends Component
             '#e9d8fd', // Lavender
             '#fbb6ce', // Light pink
             '#c3dafe', // Light blue
-            '#faf089'  // Yellow
+            '#faf089',  // Yellow
         ];
+    }
 
+    private function getMostSoldProductsChart(array $colorPalette): ColumnChartModel
+    {
         $mostSoldProducts = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('product_id')
             ->orderByDesc('total_quantity')
-            ->with('product') // Assuming you have a relationship defined in OrderItem model
-            ->limit(10) // Limit to top 10 most sold products
+            ->with('product')
+            ->limit(10)
             ->get();
 
-        // Initialize the column chart model
-        $columnChartModel = LivewireCharts::columnChartModel()->setTitle('10 Most Sold Products');
+        $columnChartModel = LivewireCharts::columnChartModel()
+            ->setTitle('10 Most Sold Products')
+            ->setHorizontal();
 
-        // dd($mostSoldProducts[0]->product->model);
-        // Add each product to the chart
         foreach ($mostSoldProducts as $index => $item) {
             $columnChartModel->addColumn(
                 $item->product->model,
@@ -47,7 +78,11 @@ class Dashboard extends Component
             );
         }
 
-        // Get most sold categories data (your existing query)
+        return $columnChartModel;
+    }
+
+    private function getMostSoldCategoriesChart(array $colorPalette): PieChartModel
+    {
         $mostSoldCategories = OrderItem::select('categories.name as category_name', DB::raw('SUM(order_items.quantity) as total_quantity'))
             ->join('products', 'order_items.product_id', '=', 'products.id')
             ->join('categories', 'products.category_id', '=', 'categories.id')
@@ -55,8 +90,8 @@ class Dashboard extends Component
             ->orderByDesc('total_quantity')
             ->get();
 
-        // Initialize the pie chart model
-        $pieChartModel = LivewireCharts::pieChartModel()->setTitle('Most Sold Categories')
+        $pieChartModel = LivewireCharts::pieChartModel()
+            ->setTitle('Most Sold Categories')
             ->setAnimated(true)
             ->setType('donut')
             ->legendPositionBottom()
@@ -64,8 +99,6 @@ class Dashboard extends Component
             ->setDataLabelsEnabled(true)
             ->setOpacity(1);
 
-        // dd($mostSoldCategories[0]->category_name);
-        // Add each category to the chart
         foreach ($mostSoldCategories as $index => $category) {
             $pieChartModel->addSlice(
                 $category->category_name,
@@ -73,20 +106,25 @@ class Dashboard extends Component
                 $colorPalette[$index % count($colorPalette)]
             );
         }
-        // $test = $pieChartModel;
-        // $pieChartModel = LivewireCharts::pieChartModel()
-        // ->setTitle('Test Chart')
-        // ->addSlice('Slice 1', 10, '#f6ad55')
-        // ->addSlice('Slice 2', 20, '#fc8181')
-        // ->addSlice('Slice 3', 30, '#90cdf4');
-        // dd($test, $pieChartModel);
 
-        $customerCount = User::where('role', 'customers')->count();
+        return $pieChartModel;
+    }
 
-        return view('admin.pages.dashboard', [
-            'columnChartModel' => $columnChartModel,
-            'pieChartModel' => $pieChartModel,
-            'customerCount' => $customerCount,
-        ]);
+    private function getLowStockProductsChart(array $colorPalette): ColumnChartModel
+    {
+        $lowStockProducts = Product::orderBy('stock_quantity', 'asc')->limit(5)->get();
+
+        $lowStockChart = LivewireCharts::columnChartModel()
+            ->setTitle('Products that are low in stock');
+
+        foreach ($lowStockProducts as $index => $product) {
+            $lowStockChart->addColumn(
+                $product->model,
+                $product->stock_quantity,
+                $colorPalette[$index % count($colorPalette)]
+            );
+        }
+
+        return $lowStockChart;
     }
 }
