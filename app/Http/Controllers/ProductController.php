@@ -20,7 +20,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        return view('pages.products.index', ['request' => []]);
+        return view('store.products.index', ['request' => []]);
     }
 
     public function show($slug)

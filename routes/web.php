@@ -51,7 +51,7 @@ Route::get('/cart', fn() => view('pages.cart'))->name('cart');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/products', [ProductController::class, 'filter'])->name('products.filter');
-Route::get('/about-us', fn() => view('pages.about'))->name('about');
+Route::get('/about-us', fn() => view('store.pages.about'))->name('about');
 
 Route::get('/inquiry', [InquiryController::class, 'index'])->name('inquiry');
 
@@ -78,7 +78,6 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     });
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
-        // Route::get('/', UsersIndex::class)->name('admin.users.index');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     });
     Route::get('create', [UserController::class, 'create'])->name('admin.create');
