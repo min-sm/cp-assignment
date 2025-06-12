@@ -6,8 +6,6 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Repositories\ProductRepository;
 use Barryvdh\Debugbar\Facades\Debugbar;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -47,8 +45,6 @@ class Index extends Component
         $this->resetPage();
     }
 
-    #[Title('Products')]
-    #[Layout('store.layouts.default')]
     public function render()
     {
         $products = $this->productRepository->getProducts([
@@ -63,6 +59,6 @@ class Index extends Component
         $brands = Brand::all();
 
         Debugbar::info($products->map(fn($product) => $product->id));
-        return view('store.products.index', compact('products', 'categories', 'brands'));
+        return view('store.products.index', compact('products', 'categories', 'brands'))->title('Products')->extends('store.layouts.default');
     }
 }

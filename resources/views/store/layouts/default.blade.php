@@ -17,9 +17,6 @@
         @yield('head-extras')
     @endif
     {{-- Load TailwindCSS --}}
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -30,11 +27,7 @@
             @livewire('layout.header')
         </header>
         <main class="flex-grow @if (View::hasSection('mainClass')) @yield('mainClass') @endif dark:bg-[#0f1515]">
-            @if (View::hasSection('content'))
-                @yield('content')
-            @else
-                {{ $slot }}
-            @endif
+            @yield('content')
         </main>
         <footer class="bg-white shadow dark:bg-gray-900">
             @include('includes.footer')

@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('store.layouts.default')
 
 @section('title', 'About Us')
 

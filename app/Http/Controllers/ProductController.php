@@ -18,11 +18,6 @@ class ProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function index()
-    {
-        return view('store.products.index', ['request' => []]);
-    }
-
     public function show($slug)
     {
         // Fetch the product
