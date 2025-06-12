@@ -14,6 +14,7 @@ use App\Livewire\Admin\Products\Create;
 use App\Livewire\Admin\Products\Edit;
 use App\Livewire\Admin\Products\Index;
 use App\Livewire\Admin\Products\Show;
+use App\Livewire\Store\Pages\Cart;
 use App\Livewire\Store\Products\Index as ProductsIndex;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -46,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.submit');
 });
 
-Route::get('/cart', fn() => view('pages.cart'))->name('cart');
+Route::get('/cart', Cart::class)->name('cart');
 Route::get('/products', ProductsIndex::class)->name('products');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/products', [ProductController::class, 'filter'])->name('products.filter');

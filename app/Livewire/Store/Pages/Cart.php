@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Store\Pages;
 
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Livewire\Component;
-// use Livewire\Attributes\Layout;
 
-// #[Layout('layouts.default')]
 class Cart extends Component
 {
     public $products;
@@ -14,7 +11,6 @@ class Cart extends Component
     public function mount()
     {
         $this->products = session('cart', []);
-        Debugbar::info($this->products);
     }
 
     public function increaseQuantity($productId)
@@ -27,7 +23,6 @@ class Cart extends Component
 
     public function decreaseQuantity($productId)
     {
-        Debugbar::info("Entered decreaseQuantity");
         if (isset($this->products[$productId])) {
             if ($this->products[$productId]['quantity'] > 1) {
                 $this->products[$productId]['quantity'] -= 1;
@@ -55,6 +50,6 @@ class Cart extends Component
 
     public function render()
     {
-        return view('livewire.cart');
+        return view('store.pages.cart')->title('Cart')->extends('store.layouts.default');
     }
 }

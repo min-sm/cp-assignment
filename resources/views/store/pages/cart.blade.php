@@ -1,3 +1,4 @@
+{{-- If your happiness depends on money, you will never be happy with yourself. --}}
 <div class="font-sans max-w-6xl max-lg:max-w-2xl mx-auto bg-white p-4">
     <div class="grid lg:grid-cols-2 gap-12">
         <div>
