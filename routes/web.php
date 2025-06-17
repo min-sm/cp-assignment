@@ -18,6 +18,7 @@ use App\Livewire\Store\Pages\Cart;
 use App\Livewire\Store\Products\Index as ProductsIndex;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
+use App\Livewire\ProductFilter;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -101,3 +102,5 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe');
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
+
+Route::get('/products-88', ProductFilter::class);
