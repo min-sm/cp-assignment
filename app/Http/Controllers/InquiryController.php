@@ -11,7 +11,7 @@ class InquiryController extends Controller
 {
     public function index()
     {
-        return view('pages.inquiry');
+        return view('store.pages.inquiry');
     }
 
     public function create(Request $request)

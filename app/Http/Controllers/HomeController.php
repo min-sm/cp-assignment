@@ -38,6 +38,6 @@ class HomeController extends Controller
             $products = $products->merge($additionalProducts);
         }
 
-        return view('pages.home', compact('products'));
+        return view('store.pages.home', compact('products'));
     }
 }

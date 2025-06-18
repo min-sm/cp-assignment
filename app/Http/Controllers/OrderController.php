@@ -59,6 +59,6 @@ class OrderController extends Controller
     public function history()
     {
         $orders = Order::where('user_id', Auth::id())->orderBy('created_at', 'desc')->paginate(20);
-        return view('pages.history', compact('orders'));
+        return view('store.pages.history', compact('orders'));
     }
 }

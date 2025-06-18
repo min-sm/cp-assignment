@@ -27,7 +27,7 @@ class ProductController extends Controller
         $relatedProducts = $this->productRepository->getRelatedProducts($product);
 
         // Pass data to view
-        return view('pages.products.show', [
+        return view('store.products.show', [
             'product' => $product,
             'products' => $relatedProducts
         ]);
