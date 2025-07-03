@@ -23,26 +23,10 @@
             </div>
 
             <!-- Category Filter -->
-            <div class="w-full md:w-48">
-                <select wire:model="selectedCategory"
-                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="">All Categories</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+            <x-store.filter-dropdown title="Categories" :items="$categories" wireModel="categories" class="w-full md:w-48" />
 
             <!-- Brand Filter -->
-            <div class="w-full md:w-48">
-                <select wire:model="selectedBrand"
-                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="">All Brands</option>
-                    @foreach ($brands as $brand)
-                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+            <x-store.filter-dropdown title="Brands" :items="$brands" wireModel="brands" class="w-full md:w-48" />
 
             <!-- Sort By -->
             <div class="w-full md:w-48">

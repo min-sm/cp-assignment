@@ -2,60 +2,115 @@
 
 namespace App\Livewire;
 
-use App\Livewire\UrlConverters\SlugArrayUrlConverter;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Livewire\Attributes\Url; // The magic attribute!
+use Livewire\Attributes\Url;
 
 class ProductFilter extends Component
 {
     use WithPagination;
 
-    // The #[Url] attribute syncs this property with the query string.
-    // as: 'b' shortens the URL to ?b[]=... instead of ?brands[]=...
-    // except: [] removes the key from the URL if it's an empty array.
-    #[Url(as: 'b', except: [])]
+    /**
+     * The array of brand IDs selected in the filter.
+     * This is bound to the checkboxes and used for the query.
+     */
     public $brands = [];
 
-    #[Url(as: 'c', except: [])]
+    /**
+     * The array of category IDs selected in the filter.
+     * This is bound to the checkboxes and used for the query.
+     */
     public $categories = [];
+
+    /**
+     * The comma-separated string of brand slugs for the URL.
+     * `except: ''` ensures the query param is removed when empty.
+     */
+    #[Url(as: 'brands', except: '')]
+    public $selectedBrands = '';
+
+    /**
+     * The comma-separated string of category slugs for the URL.
+     * `except: ''` ensures the query param is removed when empty.
+     */
+    #[Url(as: 'categories', except: '')]
+    public $selectedCategories = '';
+
+
+    /**
+     * Runs once, when the component is first mounted.
+     * It hydrates the component's state from the URL query string.
+     */
+    public function mount(): void
+    {
+        // Get the slugs from the URL string and convert them to an array of IDs
+        // to pre-select the correct checkboxes.
+        if (!empty($this->selectedBrands)) {
+            $this->brands = Brand::whereIn('name', explode(',', $this->selectedBrands))
+                ->pluck('id')->map(fn($id) => (string) $id)->toArray();
+        }
+
+        if (!empty($this->selectedCategories)) {
+            $this->categories = Category::whereIn('name', explode(',', $this->selectedCategories))
+                ->pluck('id')->map(fn($id) => (string) $id)->toArray();
+        }
+    }
+
+    /**
+     * Runs every time the `$brands` property is updated.
+     * It updates the URL string based on the selected IDs.
+     */
+    public function updatedBrands($value): void
+    {
+        // When the user checks/unchecks a brand, fetch the corresponding slugs
+        // and update the `selectedBrands` string for the URL.
+        if (empty($value)) {
+            $this->selectedBrands = '';
+        } else {
+            $this->selectedBrands = Brand::whereIn('id', $this->brands)->pluck('name')->map(strtolower(...))->implode(',');
+        }
+        $this->resetPage();
+    }
+
+    /**
+     * Runs every time the `$categories` property is updated.
+     * It updates the URL string based on the selected IDs.
+     */
+    public function updatedCategories($value): void
+    {
+        Debugbar::log($value);
+        // When the user checks/unchecks a category, fetch the corresponding slugs
+        // and update the `selectedCategories` string for the URL.
+        if (empty($value)) {
+            $this->selectedCategories = '';
+        } else {
+            $this->selectedCategories = Category::whereIn('id', $this->categories)->pluck('name')->map(strtolower(...))->implode(',');
+        }
+        $this->resetPage();
+    }
+
 
     public function render()
     {
-        Debugbar::info("welcome", $this->brands, $this->categories, "goodbye");
-        // Start the query
         $productsQuery = Product::query();
 
-        // If brands filter is not empty, apply a whereIn clause
+        // The query continues to use the simple array of IDs.
         if (!empty($this->brands)) {
             $productsQuery->whereIn('brand_id', $this->brands);
         }
 
-        // If categories filter is not empty, apply a whereIn clause
         if (!empty($this->categories)) {
             $productsQuery->whereIn('category_id', $this->categories);
         }
 
         return view('product-filter', [
             'products' => $productsQuery->with('series', 'category')->paginate(12),
-            'availableBrands' => Brand::all()->sort(),
-            //'availableBrands' => Product::distinct()->pluck('brand_id')->sort(),
-            //'availableCategories' => Product::distinct()->pluck('category_id')->sort(),
-            'availableCategories' => Category::all()->sort(),
+            'availableBrands' => Brand::all()->sortBy('name'),
+            'availableCategories' => Category::all()->sortBy('name'),
         ])->extends('store.layouts.default');
-    }
-
-    // This function runs when any of the public properties are updated.
-    // We use it to reset pagination back to the first page.
-    public function updating($key): void
-    {
-        Debugbar::info($this->brands, $this->categories, $key);
-        if (in_array($key, ['brands', 'categories'])) {
-            $this->resetPage();
-        }
     }
 }
