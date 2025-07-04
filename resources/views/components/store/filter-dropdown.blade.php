@@ -6,12 +6,12 @@
     {{-- Button to open the dropdown --}}
     <button @click="open = !open"
         class="flex items-center justify-between w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {{ $title }}<svg class="w-6 h-6 text-gray-800 dark:text-gray-500" aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m8 10 4 4 4-4" />
-            </svg>
-        </span>
+        {{ $title }}
+        <svg class="w-6 h-6 text-gray-800 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m8 10 4 4 4-4" />
+        </svg>
     </button>
 
     {{-- Dropdown Panel --}}
