@@ -28,6 +28,8 @@ class ProductFilter extends Component
 
     public array $sorting = ["price" => "default", "model" => "default"];
 
+    public array $sortOrder = [];
+
     /**
      * The comma-separated string of brand slugs for the URL.
      * `except: ''` ensures the query param is removed when empty.
@@ -112,16 +114,23 @@ class ProductFilter extends Component
             'desc' => 'default', // Cycle back to default
         };
 
-        $this->sortBy = collect($this->sorting)->map(function ($value, $key) {
-            return $value === 'asc' ? $key
-                : ($value === 'desc' ? "-$key"
-                    : null);
-        })->filter()->implode(',');
-        $this->resetPage();
+        if ($this->sorting[$field] === 'default') {
+            $this->sortOrder = array_diff($this->sortOrder, [$field]);
+        } else if (!in_array($field, $this->sortOrder)) {
+            $this->sortOrder[] = $field;
+        }
 
-        // After sorting, you would typically re-query your data.
-        // For example:
-        // $this->resetPage(); // If using pagination
+
+        // 3. REVISED: Rebuild the sortBy URL parameter based on the new sortOrder
+        $this->sortBy = collect($this->sortOrder)
+            ->map(function ($key) {
+                // Look up the direction from our main sorting state array
+                $direction = $this->sorting[$key];
+                return $direction === 'desc' ? "-$key" : $key;
+            })
+            ->implode(',');
+
+        $this->resetPage();
     }
 
     public function render()
@@ -137,15 +146,15 @@ class ProductFilter extends Component
             $productsQuery->whereIn('category_id', $this->categories);
         }
 
-        $sorting = $this->sorting ?? ['price' => 'default', 'model' => 'default'];
-
-        // Check if both are 'default'
-        if ($sorting['price'] === 'default' && $sorting['model'] === 'default') {
+        // REVISED: Apply sorting based on the $sortOrder array
+        if (empty($this->sortOrder)) {
+            // If no sorting is active, use a default order
             $productsQuery->orderBy('id');
         } else {
-            // Apply sorting for each valid field
-            foreach ($sorting as $field => $direction) {
-                if (in_array($field, ['price', 'model']) && in_array($direction, ['asc', 'desc'])) {
+            // Iterate through the ordered fields and apply the orderBy clause
+            foreach ($this->sortOrder as $field) {
+                $direction = $this->sorting[$field] ?? 'asc';
+                if (in_array($direction, ['asc', 'desc'])) {
                     $productsQuery->orderBy($field, $direction);
                 }
             }
@@ -162,29 +171,29 @@ class ProductFilter extends Component
     {
         $validKeys = ['price', 'model'];
 
-        // set to default
-        $this->sorting = [
-            'price' => 'default',
-            'model' => 'default',
-        ];
+        // Reset both state and order arrays
+        $this->sorting = ['price' => 'default', 'model' => 'default'];
+        $this->sortOrder = [];
 
         $parts = explode(',', $this->sortBy);
 
         foreach ($parts as $part) {
             $part = trim($part);
-
             if ($part === '') continue;
+
+            $key = $part;
+            $direction = 'asc';
 
             if (str_starts_with($part, '-')) {
                 $key = substr($part, 1);
-                if (in_array($key, $validKeys)) {
-                    $this->sorting[$key] = 'desc';
-                }
-            } else {
-                $key = $part;
-                if (in_array($key, $validKeys)) {
-                    $this->sorting[$key] = 'asc';
-                }
+                $direction = 'desc';
+            }
+
+            if (in_array($key, $validKeys)) {
+                // Set the direction
+                $this->sorting[$key] = $direction;
+                // Add the field to our ordered list
+                $this->sortOrder[] = $key;
             }
         }
     }
